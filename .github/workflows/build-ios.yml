@@ -37,10 +37,12 @@ jobs:
           cd ios
           pod install --repo-update
 
+      # ИСПРАВЛЕННЫЙ ШАГ: Ищем только реальные файлы в папке fmt, обходя ярлыки
       - name: Patch fmt (remove consteval)
         run: |
-          find ios/Pods -path "*fmt*" -name "*.h" -exec sed -i '' 's/consteval//g' {} +
-          find ios/Pods -path "*fmt*" -name "*.cc" -exec sed -i '' 's/consteval//g' {} +
+          echo "Патчинг исходников fmt..."
+          find ios/Pods/fmt -type f \( -name "*.h" -o -name "*.cc" \) -exec sed -i '' 's/consteval//g' {} +
+          echo "Патч fmt завершен!"
 
       - name: Build iOS (Unsigned)
         run: |
