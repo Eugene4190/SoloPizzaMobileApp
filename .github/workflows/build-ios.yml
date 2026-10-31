@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-13 # Используем Intel Mac (намного стабильнее для RN)
+    runs-on: macos-14 # Используем Apple Silicon (M1)
 
     steps:
       - name: Checkout Repository
@@ -14,21 +14,25 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Обновили до 20
+          node-version: '20'
           cache: 'npm'
 
       - name: Install Dependencies
         run: npm install
 
+      - name: Patch Yoga.cpp
+        run: |
+          sed -i '' 's/ | / || /g' node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp
+
       - name: Install Pods
         run: |
           cd ios
-          pod install
+          pod install --repo-update
 
       - name: Build iOS (Unsigned)
         run: |
           cd ios
-          xcodebuild -workspace *.xcworkspace -scheme SoloPizzaMobileApp -configuration Release -sdk iphoneos -derivedDataPath ./build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_ENTITLEMENTS="" build
+          xcodebuild -workspace *.xcworkspace -scheme SoloPizzaMobileApp -configuration Release -sdk iphoneos -arch arm64 -derivedDataPath ./build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_ENTITLEMENTS="" build
 
       - name: Package into IPA
         run: |
