@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest # <--- ИЗМЕНЕНО НА САМЫЙ СВЕЖИЙ СЕРВЕР
+    runs-on: macos-latest
 
     steps:
       - name: Checkout Repository
@@ -20,9 +20,12 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      # УМНЫЙ ПАТЧ: Ищем файл Yoga.cpp везде, где он есть, и патчим
       - name: Patch Yoga.cpp
         run: |
-          sed -i '' 's/ | / || /g' node_modules/react-native/ReactCommon/yoga/yoga/Yoga.cpp
+          echo "Поиск файла Yoga.cpp..."
+          find node_modules -name "Yoga.cpp" -exec sed -i '' 's/ | / || /g' {} +
+          echo "Патч завершен!"
 
       - name: Install Pods
         run: |
