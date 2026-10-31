@@ -5,11 +5,16 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-15 # Используем стабильный раннер
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '16.2' # Явно указываем стабильную версию Xcode
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -20,11 +25,11 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      # УМНЫЙ ПАТЧ: Ищем файл Yoga.cpp везде, где он есть, и патчим
+      # Улучшенный патч с проверкой
       - name: Patch Yoga.cpp
         run: |
-          echo "Поиск файла Yoga.cpp..."
-          find node_modules -name "Yoga.cpp" -exec sed -i '' 's/ | / || /g' {} +
+          echo "Поиск и патчинг Yoga.cpp..."
+          find node_modules -name "Yoga.cpp" -print -exec sed -i '' 's/node->setLayoutHadOverflow() |/node->setLayoutHadOverflow() ||/g' {} +
           echo "Патч завершен!"
 
       - name: Install Pods
