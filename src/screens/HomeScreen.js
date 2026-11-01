@@ -191,7 +191,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>SoloPizza</Text>
         <Text style={styles.headerSubtitle}>
-          {user ? `Привет, ${user.first_name || 'Друг'}!` : 'Лучшая пицца в городе'}
+          {user ? `Привет, ${user.first_name || 'Друг'}!` : 'Контур работает: правки прилетают за секунды'}
         </Text>
       </View>
 
