@@ -9,6 +9,7 @@
 export const light = {
   accent: '#079b59',
   accentRgba: 'rgba(7, 155, 89, 0.3)',
+  errorRgba: 'rgba(220, 53, 69, 0.1)',
   bg: '#f8f9fa',
   text: '#333333',
   hoverBg: '#ecf0f1',
@@ -27,6 +28,7 @@ export const light = {
 export const dark = {
   accent: '#079b59',
   accentRgba: 'rgba(7, 155, 89, 0.3)',
+  errorRgba: 'rgba(213, 58, 58, 0.25)',
   bg: '#2a2a2a',
   text: '#f1f1f1',
   hoverBg: '#2c2c2c',

@@ -16,10 +16,13 @@ import { fetchFeaturedProducts, fetchCategories } from '../store/slices/productS
 import { addToCart } from '../store/slices/cartSlice';
 import { catalogService, productService, promoService } from '../services';
 import DemoBanner from '../components/ui/DemoBanner';
+import useAppTheme from '../theme/useAppTheme';
 
 const { width } = Dimensions.get('window');
 
 const HomeScreen = ({ navigation }) => {
+  const { colors } = useAppTheme();
+  const styles = makeStyles(colors);
   const dispatch = useDispatch();
   const { featuredProducts, categories, loading } = useSelector(state => state.products);
   const { user } = useSelector(state => state.auth);
@@ -281,37 +284,37 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.bg,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.bg,
   },
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
   },
   header: {
     paddingHorizontal: 20,
     paddingTop: 50,
     paddingBottom: 20,
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
   },
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: colors.buttonText,
     textAlign: 'center',
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#ffffff',
+    color: colors.buttonText,
     textAlign: 'center',
     marginTop: 5,
     opacity: 0.9,
@@ -321,7 +324,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: 'hidden',
     elevation: 5,
-    shadowColor: '#333333',
+    shadowColor: colors.text,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -335,13 +338,13 @@ const styles = StyleSheet.create({
   bannerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: colors.buttonText,
     textAlign: 'center',
     marginBottom: 5,
   },
   bannerSubtitle: {
     fontSize: 16,
-    color: '#ffffff',
+    color: colors.buttonText,
     textAlign: 'center',
   },
   bannerIndicators: {
@@ -354,7 +357,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.cardBg,
     marginHorizontal: 4,
   },
   section: {
@@ -373,13 +376,13 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   seeAllText: {
-    color: '#079b59',
+    color: colors.accent,
     fontSize: 16,
     fontWeight: '600',
   },
   emptyText: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     textAlign: 'center',
     fontStyle: 'italic',
   },
@@ -395,7 +398,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.cardBg,
     marginBottom: 8,
   },
   categoryName: {
@@ -408,12 +411,12 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   productCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.cardBg,
     borderRadius: 20,
     marginRight: 15,
     width: 160,
     elevation: 3,
-    shadowColor: '#333333',
+    shadowColor: colors.text,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
@@ -435,7 +438,7 @@ const styles = StyleSheet.create({
   },
   productDescription: {
     fontSize: 12,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginBottom: 8,
     lineHeight: 16,
   },
@@ -447,10 +450,10 @@ const styles = StyleSheet.create({
   productPrice: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#079b59',
+    color: colors.accent,
   },
   addButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     width: 30,
     height: 30,
     borderRadius: 20,
@@ -469,18 +472,18 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   addButtonText: {
-    color: '#ffffff',
+    color: colors.buttonText,
     fontSize: 18,
     fontWeight: 'bold',
   },
   infoSection: {
     marginHorizontal: 20,
     marginBottom: 30,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.cardBg,
     borderRadius: 20,
     padding: 20,
     elevation: 3,
-    shadowColor: '#333333',
+    shadowColor: colors.text,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
@@ -503,7 +506,7 @@ const styles = StyleSheet.create({
   },
   infoItemText: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
     lineHeight: 20,
   },
 });

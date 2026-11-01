@@ -1,23 +1,24 @@
 import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { light } from '../theme/colors';
-
-// Тема навигации = палитра сайта (src/theme/colors.js): заголовки, таб-бар, фон.
-const navTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: light.accent,
-    background: light.bg,
-    card: light.headerBg,
-    text: light.text,
-    border: light.divider,
-  },
-};
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSelector } from 'react-redux';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, useColorScheme } from 'react-native';
+import { light, dark } from '../theme/colors';
+
+// Тема навигации = палитра сайта (src/theme/colors.js): заголовки, таб-бар, фон.
+// Следует системной теме телефона, как класс .dark на сайте.
+const makeNavTheme = (palette) => ({
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: palette.accent,
+    background: palette.bg,
+    card: palette.headerBg,
+    text: palette.text,
+    border: palette.divider,
+  },
+});
 
 // Импорт экранов
 import HomeScreen from '../screens/HomeScreen';
@@ -52,15 +53,17 @@ function CartIcon({ color, size }) {
 }
 
 function TabNavigator() {
+  const scheme = useColorScheme();
+  const palette = scheme === 'dark' ? dark : light;
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#079b59',
-        tabBarInactiveTintColor: '#6c757d',
+        tabBarActiveTintColor: palette.accent,
+        tabBarInactiveTintColor: palette.textMuted,
         tabBarStyle: {
-          backgroundColor: '#ffffff',
+          backgroundColor: palette.headerBg,
           borderTopWidth: 1,
-          borderTopColor: '#e0e0e0',
+          borderTopColor: palette.divider,
           height: 60,
           paddingBottom: 5,
         },
@@ -113,6 +116,8 @@ function TabNavigator() {
 
 // Главный навигатор приложения
 export default function AppNavigator() {
+  const scheme = useColorScheme();
+  const navTheme = makeNavTheme(scheme === 'dark' ? dark : light);
   return (
     <NavigationContainer theme={navTheme}>
       <Stack.Navigator

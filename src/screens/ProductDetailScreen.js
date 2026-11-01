@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import ProductImage from '../components/ui/ProductImage';
+import useAppTheme from '../theme/useAppTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductById } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
@@ -18,6 +19,8 @@ import { productService } from '../services';
 const { width } = Dimensions.get('window');
 
 const ProductDetailScreen = ({ route, navigation }) => {
+  const { colors } = useAppTheme();
+  const styles = makeStyles(colors);
   const { productId, product: routeProduct } = route.params;
   const dispatch = useDispatch();
   const { currentProduct, loading: reduxLoading } = useSelector(state => state.products);
@@ -392,7 +395,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F9FA',
@@ -406,7 +409,7 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
   },
   errorContainer: {
     flex: 1,
@@ -418,7 +421,7 @@ const styles = StyleSheet.create({
   errorText: {
      marginTop: 16,
      fontSize: 18,
-     color: '#6c757d',
+     color: colors.textMuted,
      textAlign: 'center',
    },
   scrollView: {
@@ -436,20 +439,20 @@ const styles = StyleSheet.create({
   productName: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 12,
     lineHeight: 34,
   },
   productDescription: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     lineHeight: 24,
     marginBottom: 16,
   },
   basePrice: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#079b59',
+    color: colors.accent,
   },
   section: {
     backgroundColor: '#FFFFFF',
@@ -459,7 +462,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 20,
   },
   optionsContainer: {
@@ -473,19 +476,19 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
     minWidth: 90,
     alignItems: 'center',
-    shadowColor: '#333333',
+    shadowColor: colors.text,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1,
   },
   optionButtonActive: {
-    backgroundColor: '#079b59',
-    borderColor: '#079b59',
-    shadowColor: '#079b59',
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
+    shadowColor: colors.accent,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 8,
@@ -494,7 +497,7 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#333333',
+    color: colors.text,
     textAlign: 'center',
   },
   optionTextActive: {
@@ -502,7 +505,7 @@ const styles = StyleSheet.create({
   },
   optionPrice: {
     fontSize: 13,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginTop: 4,
     fontWeight: '500',
   },
@@ -520,16 +523,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#e0e0e0',
-    shadowColor: '#333333',
+    borderColor: colors.divider,
+    shadowColor: colors.text,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1,
   },
   addonItemActive: {
-    backgroundColor: '#fdecee',
-    borderColor: '#079b59',
+    backgroundColor: colors.errorRgba,
+    borderColor: colors.accent,
   },
   addonInfo: {
     flex: 1,
@@ -537,33 +540,33 @@ const styles = StyleSheet.create({
   addonName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333333',
+    color: colors.text,
   },
   addonNameActive: {
-    color: '#079b59',
+    color: colors.accent,
   },
   addonPrice: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginTop: 4,
     fontWeight: '500',
   },
   addonPriceActive: {
-    color: '#079b59',
+    color: colors.accent,
   },
   checkbox: {
     width: 24,
     height: 24,
     borderRadius: 6,
     borderWidth: 2,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
   checkboxActive: {
-    backgroundColor: '#079b59',
-    borderColor: '#079b59',
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
   },
   checkmark: {
     color: '#FFFFFF',
@@ -580,10 +583,10 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 20,
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#079b59',
+    shadowColor: colors.accent,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -597,7 +600,7 @@ const styles = StyleSheet.create({
   quantityText: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#333333',
+    color: colors.text,
     minWidth: 40,
     textAlign: 'center',
   },
@@ -612,20 +615,20 @@ const styles = StyleSheet.create({
   },
   nutritionLabel: {
     fontSize: 16,
-    color: '#333333',
+    color: colors.text,
     fontWeight: '500',
   },
   nutritionValue: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#6c757d',
+    color: colors.textMuted,
   },
   bottomPanel: {
     backgroundColor: '#FFFFFF',
     padding: 24,
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-    shadowColor: '#333333',
+    borderTopColor: colors.divider,
+    shadowColor: colors.text,
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
@@ -639,20 +642,20 @@ const styles = StyleSheet.create({
   },
   totalPriceLabel: {
     fontSize: 18,
-    color: '#333333',
+    color: colors.text,
     fontWeight: '500',
   },
   totalPrice: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#079b59',
+    color: colors.accent,
   },
   addToCartButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingVertical: 18,
     borderRadius: 20,
     alignItems: 'center',
-    shadowColor: '#079b59',
+    shadowColor: colors.accent,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,

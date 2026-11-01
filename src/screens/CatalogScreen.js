@@ -16,8 +16,11 @@ import { fetchProducts, fetchCategories } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
 import { catalogService, productService } from '../services';
 import DemoBanner from '../components/ui/DemoBanner';
+import useAppTheme from '../theme/useAppTheme';
 
 const CatalogScreen = ({ navigation }) => {
+  const { colors } = useAppTheme();
+  const styles = makeStyles(colors);
   const dispatch = useDispatch();
   const { products, categories, loading, error } = useSelector(state => state.products);
   
@@ -306,30 +309,30 @@ const CatalogScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.bg,
   },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.bg,
   },
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
   },
   errorText: {
     fontSize: 16,
-    color: '#dc3545',
+    color: colors.error,
     textAlign: 'center',
     marginBottom: 20,
   },
   retryButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
@@ -343,38 +346,38 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: 'white',
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: colors.divider,
   },
   searchInput: {
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.bg,
     borderRadius: 10,
     paddingHorizontal: 15,
     paddingVertical: 12,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
   },
   categoriesContainer: {
     backgroundColor: 'white',
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: colors.divider,
   },
   categoriesList: {
     paddingHorizontal: 15,
   },
   categoryItem: {
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.bg,
     paddingHorizontal: 15,
     paddingVertical: 8,
     borderRadius: 20,
     marginRight: 10,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
   },
   selectedCategory: {
-    backgroundColor: '#079b59',
-    borderColor: '#079b59',
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
   },
   categoryText: {
     fontSize: 14,
@@ -388,7 +391,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: colors.divider,
   },
   sortLabel: {
     fontSize: 16,
@@ -401,16 +404,16 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   sortButton: {
-    backgroundColor: '#f8f9fa',
+    backgroundColor: colors.bg,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
   },
   selectedSortButton: {
-    backgroundColor: '#079b59',
-    borderColor: '#079b59',
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
   },
   sortButtonText: {
     fontSize: 12,
@@ -428,7 +431,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     margin: 5,
-    shadowColor: '#333333',
+    shadowColor: colors.text,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -454,7 +457,7 @@ const styles = StyleSheet.create({
   },
   productDescription: {
     fontSize: 12,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginBottom: 8,
     lineHeight: 16,
   },
@@ -466,10 +469,10 @@ const styles = StyleSheet.create({
   productPrice: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#079b59',
+    color: colors.accent,
   },
   addButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     width: 30,
     height: 30,
     borderRadius: 20,
@@ -489,12 +492,12 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     textAlign: 'center',
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
     textAlign: 'center',
     marginTop: 8,
   },
@@ -502,7 +505,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 8,
     right: 8,
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 8,
