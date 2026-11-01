@@ -4,12 +4,12 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Image,
   TouchableOpacity,
   ActivityIndicator,
   Alert,
   Dimensions,
 } from 'react-native';
+import ProductImage from '../components/ui/ProductImage';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductById } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
@@ -288,12 +288,10 @@ const ProductDetailScreen = ({ route, navigation }) => {
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Изображение товара */}
-        <Image
-          source={{
-            uri: product.image || product.images?.[0]?.image || 'https://via.placeholder.com/400x300/FF6B35/FFFFFF?text=' + product.name.charAt(0),
-          }}
+        <ProductImage
+          uri={product.image || product.images?.[0]?.image}
           style={styles.productImage}
-          resizeMode="cover"
+          emojiSize={72}
         />
 
         {/* Информация о товаре */}

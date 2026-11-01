@@ -108,7 +108,7 @@ class ApiService {
 
     // Create timeout promise
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Request timeout')), this.timeout);
+      setTimeout(() => reject(new Error('Request timeout')), options.timeout ?? this.timeout);
     });
 
     try {
@@ -135,7 +135,11 @@ class ApiService {
 
       return await this.handleResponse(response);
     } catch (error) {
-      console.error('API Request failed:', error);
+      // silent: ожидаемые сбои (демо-режим) не spam'ят console.error,
+      // иначе LogBox в debug-сборке показывает красные тосты на каждый запрос
+      if (!options.silent) {
+        console.error('API Request failed:', error);
+      }
       throw this.handleError(error);
     }
   }
@@ -190,13 +194,14 @@ class ApiService {
   }
 
   // Convenience methods
-  async get(endpoint, params = {}) {
+  async get(endpoint, params = {}, reqOptions = {}) {
     const queryString = Object.keys(params).length 
       ? '?' + new URLSearchParams(params).toString()
       : '';
     
     return this.makeRequest(`${endpoint}${queryString}`, {
       method: 'GET',
+      ...reqOptions,
     });
   }
 

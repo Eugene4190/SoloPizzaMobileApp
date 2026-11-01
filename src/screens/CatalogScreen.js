@@ -6,11 +6,11 @@ import {
   FlatList,
   TouchableOpacity,
   TextInput,
-  Image,
   ActivityIndicator,
   RefreshControl,
   Alert,
 } from 'react-native';
+import ProductImage from '../components/ui/ProductImage';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, fetchCategories } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
@@ -169,12 +169,7 @@ const CatalogScreen = ({ navigation }) => {
       style={styles.productCard}
       onPress={() => navigation.navigate('ProductDetail', { productId: item.id })}
     >
-      <Image
-        source={{ uri: item.image || item.main_image || item.images?.[0]?.image || 'https://via.placeholder.com/150' }}
-        style={styles.productImage}
-        resizeMode="cover"
-        defaultSource={{ uri: 'https://via.placeholder.com/150/FF6B35/FFFFFF?text=Product' }}
-      />
+      <ProductImage uri={item.image || item.main_image || item.images?.[0]?.image} style={styles.productImage} />
       {(item.is_popular || item.isPopular) && (
         <View style={styles.popularBadge}>
           <Text style={styles.popularText}>Популярное</Text>

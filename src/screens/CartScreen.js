@@ -5,12 +5,12 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Image,
   Alert,
   RefreshControl,
   ActivityIndicator,
   TextInput,
 } from 'react-native';
+import ProductImage from '../components/ui/ProductImage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 // ИСПРАВЛЕНО ПРИ АУДИТЕ: прямой импорт react-native-vector-icons в v10.x
 // не тянет шрифт — иконки рендерились пустыми квадратами.
@@ -258,12 +258,10 @@ const CartScreen = ({ navigation }) => {
 
     return (
       <View style={styles.cartItem}>
-        <Image
-          source={{
-            uri: item.image || item.product?.main_image || 'https://via.placeholder.com/80x80/FF6B35/FFFFFF?text=' + (item.name?.charAt(0) || 'P'),
-          }}
+        <ProductImage
+          uri={item.image || item.product?.main_image}
           style={styles.itemImage}
-          resizeMode="cover"
+          emojiSize={28}
         />
         
         <View style={styles.itemInfo}>

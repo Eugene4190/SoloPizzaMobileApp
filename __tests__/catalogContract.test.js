@@ -65,7 +65,7 @@ describe('contract: categories', () => {
 
   test('branch_id уходит в query запроса категорий', async () => {
     await catalogService.getCategories();
-    expect(apiService.get).toHaveBeenCalledWith('/categories/', { branch_id: 1 });
+    expect(apiService.get).toHaveBeenCalledWith('/categories/', { branch_id: 1 }, expect.any(Object));
   });
 });
 
@@ -91,7 +91,7 @@ describe('contract: products', () => {
     await catalogService.getCategories();
     const picca = await catalogService.getProducts({ category: 1 });
     expect(picca.length).toBeGreaterThan(0);
-    expect(apiService.get).toHaveBeenCalledWith('/products/', { branch_id: 1, category: 'picca' });
+    expect(apiService.get).toHaveBeenCalledWith('/products/', { branch_id: 1, category: 'picca' }, expect.any(Object));
   });
 
   test('поиск фильтрует по имени (серверного поиска в app_api нет)', async () => {

@@ -69,7 +69,12 @@ class CatalogService {
    */
   async _request(path, params = {}, slugParam = null) {
     try {
-      return await apiService.get(path, params);
+      // 5 секунд вместо общих 10: демо-режим включается быстрее,
+      // silent: пока API не задеплоен, ожидаемые сбои не светят красными тостами
+      return await apiService.get(path, params, {
+        timeout: 5000,
+        silent: USE_DEMO_FALLBACK,
+      });
     } catch (error) {
       if (!USE_DEMO_FALLBACK) throw error;
       this._demo = true;

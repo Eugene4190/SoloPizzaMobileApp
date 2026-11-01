@@ -5,12 +5,12 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Image,
   FlatList,
   ActivityIndicator,
   RefreshControl,
   Dimensions,
 } from 'react-native';
+import ProductImage, { CATEGORY_GLYPHS } from '../components/ui/ProductImage';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFeaturedProducts, fetchCategories } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
@@ -131,10 +131,9 @@ const HomeScreen = ({ navigation }) => {
       style={styles.productCard}
       onPress={() => navigation.navigate('ProductDetail', { productId: item.id })}
     >
-      <Image 
-        source={{ uri: item.image || item.main_image || item.images?.[0]?.image || 'https://via.placeholder.com/150' }} 
+      <ProductImage 
+        uri={item.image || item.main_image || item.images?.[0]?.image} 
         style={styles.productImage}
-        defaultSource={{ uri: 'https://via.placeholder.com/150x150/FF6B35/FFFFFF?text=Pizza' }}
       />
       <View style={styles.productInfo}>
         <Text style={styles.productName}>{item.name}</Text>
@@ -161,9 +160,11 @@ const HomeScreen = ({ navigation }) => {
       style={styles.categoryCard}
       onPress={() => navigateToCategory(item)}
     >
-      <Image
-        source={{ uri: item.image || 'https://via.placeholder.com/80' }}
+      <ProductImage
+        uri={item.image}
+        glyph={CATEGORY_GLYPHS[item.slug] || '🍽'}
         style={styles.categoryImage}
+        emojiSize={32}
       />
       <Text style={styles.categoryName}>{item.name}</Text>
     </TouchableOpacity>
