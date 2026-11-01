@@ -121,11 +121,40 @@ export const fetchProductById = createAsyncThunk(
 // Slice
 // ─────────────────────────────────────────────────────────────
 
+/** Филиалы: контракт app_api требует branch_id в каждом запросе каталога. */
+export const fetchBranches = createAsyncThunk(
+  'products/fetchBranches',
+  async (_, { rejectWithValue }) => {
+    try {
+      await catalogService.ensureBranchId();
+      return toArray(await catalogService.getBranches());
+    } catch (error) {
+      return rejectWithValue(error?.message || 'Не удалось загрузить филиалы');
+    }
+  },
+);
+
+/** Смена филиала: сбрасывает кэш товаров сервиса и список товаров в стейте. */
+export const selectBranch = createAsyncThunk(
+  'products/selectBranch',
+  async (branchId, { rejectWithValue }) => {
+    if (branchId === undefined || branchId === null) {
+      return rejectWithValue('Не указан идентификатор филиала');
+    }
+    catalogService.setBranchId(branchId);
+    return branchId;
+  },
+);
+
 const initialState = {
   products: [],
   featuredProducts: [],
   categories: [],
   currentProduct: null,
+  branches: [],
+  branchId: null,
+  // true, когда каталог работает на демо-данных (API ещё не задеплоен)
+  isDemo: false,
   currentPage: 1,
   totalPages: 1,
   hasNext: false,
@@ -167,6 +196,7 @@ const productSlice = createSlice({
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.loading = false;
         state.categories = action.payload;
+        state.isDemo = catalogService.isDemoActive();
       })
       .addCase(fetchCategories.rejected, (state, action) => {
         state.loading = false;
@@ -185,6 +215,7 @@ const productSlice = createSlice({
         state.totalPages = action.payload.totalPages;
         state.hasNext = action.payload.hasNext;
         state.hasPrevious = action.payload.hasPrevious;
+        state.isDemo = catalogService.isDemoActive();
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
@@ -220,6 +251,22 @@ const productSlice = createSlice({
         state.loadingProduct = false;
         state.currentProduct = null;
         state.error = action.payload;
+      })
+
+      // Филиалы
+      .addCase(fetchBranches.fulfilled, (state, action) => {
+        state.branches = action.payload;
+        state.branchId = catalogService.getBranchId();
+        state.isDemo = catalogService.isDemoActive();
+      })
+      .addCase(fetchBranches.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(selectBranch.fulfilled, (state, action) => {
+        state.branchId = action.payload;
+        state.products = [];
+        state.currentProduct = null;
+        state.isDemo = catalogService.isDemoActive();
       });
   },
 });

@@ -1,13 +1,24 @@
 // API Configuration for SoloPizza Mobile App
 
 // Base URL for the Django API
-export const API_BASE_URL = __DEV__ 
-  ? 'http://10.0.2.2:8000/api'  // Android emulator localhost
-  : 'https://solo-pizza.by/api'; // Production URL
+// 01.11.2026: префикс изменён с /api на /api/v1 — именно так смонтирован app_api
+// в коде сайта (Xumpocmb/SoloPizza, SoloPizza/urls.py: path("api/v1/", include("app_api.urls"))).
+export const API_BASE_URL = __DEV__
+  ? 'http://10.0.2.2:8000/api/v1'  // Android emulator localhost
+  : 'https://solo-pizza.by/api/v1'; // Production URL
+
+// ДЕМО-РЕЖИМ. На 01.11.2026 app_api существует ТОЛЬКО в коде сайта, на боевом
+// solo-pizza.by все /api/v1/* отвечают 404 (друг ещё не задеплоил).
+// Пока true: при сетевой ошибке/404 каталог подставляет демо-данные ТОЙ ЖЕ ФОРМЫ,
+// что и реальный API, и приложение помечает экраны баннером «демо-данные».
+// Как только друг задеплоит app_api — поставить false и удалить demoCatalog.js.
+export const USE_DEMO_FALLBACK = true;
 
 // API Endpoints
 export const API_ENDPOINTS = {
   // Authentication
+  // ⚠️ НЕ ЗАДЕПЛОЕНО: в app_api пока нет эндпоинтов авторизации (на сайте — allauth,
+  // сессии). Пути ниже — заглушки по plan.txt; сверим с фактом, когда друг допишет.
   AUTH: {
     LOGIN: '/auth/login/',
     REGISTER: '/auth/register/',
@@ -18,16 +29,17 @@ export const API_ENDPOINTS = {
   },
 
   // Catalog
+  // ЕДИНСТВЕННАЯ группа, чьи пути совпадают с кодом сайта (Xumpocmb/SoloPizza, app_api).
+  // Источник истины: app_api/urls.py + serializers.py, снято 01.11.2026.
+  // Ответы DRF без пагинации (plain-массивы). branch_id обязателен для всех,
+  // кроме META и BRANCHES. Алкоголь отфильтрован на сервере (filters.py).
   CATALOG: {
-    CATEGORIES: '/catalog/categories/',
-    CATEGORY_DETAIL: (id) => `/catalog/categories/${id}/`,
-    PRODUCTS: '/catalog/products/',
-    PRODUCT_DETAIL: (id) => `/catalog/products/${id}/`,
-    VARIANTS: '/catalog/variants/',
-    SAUCES: '/catalog/sauces/',
-    BOARDS: '/catalog/boards/',
-    ADDONS: '/catalog/addons/',
-    SIZES: '/catalog/sizes/',
+    META: '/meta/',
+    BRANCHES: '/branches/',
+    CATEGORIES: '/categories/',
+    CATEGORY_DETAIL: (slug) => `/categories/${slug}/`,
+    PRODUCTS: '/products/',
+    PRODUCT_DETAIL: (slug) => `/products/${slug}/`,
   },
 
   // Cart
