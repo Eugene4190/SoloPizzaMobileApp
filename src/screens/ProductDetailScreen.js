@@ -264,7 +264,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#FF6B35" />
+        <ActivityIndicator size="large" color="#079b59" />
         <Text style={styles.loadingText}>Загрузка товара...</Text>
       </View>
     );
@@ -408,7 +408,7 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#666666',
+    color: '#6c757d',
   },
   errorContainer: {
     flex: 1,
@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
   errorText: {
      marginTop: 16,
      fontSize: 18,
-     color: '#666666',
+     color: '#6c757d',
      textAlign: 'center',
    },
   scrollView: {
@@ -438,20 +438,20 @@ const styles = StyleSheet.create({
   productName: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: '#333333',
     marginBottom: 12,
     lineHeight: 34,
   },
   productDescription: {
     fontSize: 16,
-    color: '#6B7280',
+    color: '#6c757d',
     lineHeight: 24,
     marginBottom: 16,
   },
   basePrice: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#FF6B35',
+    color: '#079b59',
   },
   section: {
     backgroundColor: '#FFFFFF',
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: '#333333',
     marginBottom: 20,
   },
   optionsContainer: {
@@ -473,21 +473,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     paddingHorizontal: 20,
     paddingVertical: 14,
-    borderRadius: 12,
+    borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#E5E7EB',
+    borderColor: '#e0e0e0',
     minWidth: 90,
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: '#333333',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1,
   },
   optionButtonActive: {
-    backgroundColor: '#FF6B35',
-    borderColor: '#FF6B35',
-    shadowColor: '#FF6B35',
+    backgroundColor: '#079b59',
+    borderColor: '#079b59',
+    shadowColor: '#079b59',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 8,
@@ -496,7 +496,7 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#374151',
+    color: '#333333',
     textAlign: 'center',
   },
   optionTextActive: {
@@ -504,7 +504,7 @@ const styles = StyleSheet.create({
   },
   optionPrice: {
     fontSize: 13,
-    color: '#6B7280',
+    color: '#6c757d',
     marginTop: 4,
     fontWeight: '500',
   },
@@ -520,18 +520,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
+    borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#E5E7EB',
-    shadowColor: '#000',
+    borderColor: '#e0e0e0',
+    shadowColor: '#333333',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1,
   },
   addonItemActive: {
-    backgroundColor: '#FEF3F2',
-    borderColor: '#FF6B35',
+    backgroundColor: '#fdecee',
+    borderColor: '#079b59',
   },
   addonInfo: {
     flex: 1,
@@ -539,33 +539,33 @@ const styles = StyleSheet.create({
   addonName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#374151',
+    color: '#333333',
   },
   addonNameActive: {
-    color: '#FF6B35',
+    color: '#079b59',
   },
   addonPrice: {
     fontSize: 14,
-    color: '#6B7280',
+    color: '#6c757d',
     marginTop: 4,
     fontWeight: '500',
   },
   addonPriceActive: {
-    color: '#FF6B35',
+    color: '#079b59',
   },
   checkbox: {
     width: 24,
     height: 24,
     borderRadius: 6,
     borderWidth: 2,
-    borderColor: '#E5E7EB',
+    borderColor: '#e0e0e0',
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
   checkboxActive: {
-    backgroundColor: '#FF6B35',
-    borderColor: '#FF6B35',
+    backgroundColor: '#079b59',
+    borderColor: '#079b59',
   },
   checkmark: {
     color: '#FFFFFF',
@@ -581,11 +581,11 @@ const styles = StyleSheet.create({
   quantityButton: {
     width: 44,
     height: 44,
-    borderRadius: 22,
-    backgroundColor: '#FF6B35',
+    borderRadius: 20,
+    backgroundColor: '#079b59',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#FF6B35',
+    shadowColor: '#079b59',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -599,7 +599,7 @@ const styles = StyleSheet.create({
   quantityText: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: '#333333',
     minWidth: 40,
     textAlign: 'center',
   },
@@ -614,20 +614,20 @@ const styles = StyleSheet.create({
   },
   nutritionLabel: {
     fontSize: 16,
-    color: '#374151',
+    color: '#333333',
     fontWeight: '500',
   },
   nutritionValue: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#6B7280',
+    color: '#6c757d',
   },
   bottomPanel: {
     backgroundColor: '#FFFFFF',
     padding: 24,
     borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
-    shadowColor: '#000',
+    borderTopColor: '#e0e0e0',
+    shadowColor: '#333333',
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
@@ -641,20 +641,20 @@ const styles = StyleSheet.create({
   },
   totalPriceLabel: {
     fontSize: 18,
-    color: '#374151',
+    color: '#333333',
     fontWeight: '500',
   },
   totalPrice: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#FF6B35',
+    color: '#079b59',
   },
   addToCartButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingVertical: 18,
-    borderRadius: 16,
+    borderRadius: 20,
     alignItems: 'center',
-    shadowColor: '#FF6B35',
+    shadowColor: '#079b59',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,

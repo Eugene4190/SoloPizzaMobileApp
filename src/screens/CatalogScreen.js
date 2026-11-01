@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, fetchCategories } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
 import { catalogService, productService } from '../services';
+import DemoBanner from '../components/ui/DemoBanner';
 
 const CatalogScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -217,7 +218,7 @@ const CatalogScreen = ({ navigation }) => {
   if (loading && !refreshing) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#FF6B35" />
+        <ActivityIndicator size="large" color="#079b59" />
         <Text style={styles.loadingText}>Загрузка каталога...</Text>
       </View>
     );
@@ -236,6 +237,8 @@ const CatalogScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <DemoBanner />
+
       {/* Поиск */}
       <View style={styles.searchContainer}>
         <TextInput
@@ -243,7 +246,7 @@ const CatalogScreen = ({ navigation }) => {
           placeholder="Поиск товаров..."
           value={searchQuery}
           onChangeText={setSearchQuery}
-          placeholderTextColor="#999"
+          placeholderTextColor="#6c757d"
         />
       </View>
 
@@ -282,7 +285,7 @@ const CatalogScreen = ({ navigation }) => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            colors={['#FF6B35']}
+            colors={['#079b59']}
           />
         }
         onEndReached={loadMore}
@@ -291,7 +294,7 @@ const CatalogScreen = ({ navigation }) => {
           if (loadingMore) {
             return (
               <View style={styles.loadingMoreContainer}>
-                <ActivityIndicator size="small" color="#FF6B35" />
+                <ActivityIndicator size="small" color="#079b59" />
               </View>
             );
           }
@@ -322,7 +325,7 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#666',
+    color: '#6c757d',
   },
   errorText: {
     fontSize: 16,
@@ -331,7 +334,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   retryButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
@@ -345,7 +348,7 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: 'white',
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: '#e0e0e0',
   },
   searchInput: {
     backgroundColor: '#f8f9fa',
@@ -354,13 +357,13 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#e0e0e0',
   },
   categoriesContainer: {
     backgroundColor: 'white',
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: '#e0e0e0',
   },
   categoriesList: {
     paddingHorizontal: 15,
@@ -372,11 +375,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginRight: 10,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#e0e0e0',
   },
   selectedCategory: {
-    backgroundColor: '#FF6B35',
-    borderColor: '#FF6B35',
+    backgroundColor: '#079b59',
+    borderColor: '#079b59',
   },
   categoryText: {
     fontSize: 14,
@@ -390,7 +393,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: '#e0e0e0',
   },
   sortLabel: {
     fontSize: 16,
@@ -406,13 +409,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f9fa',
     paddingHorizontal: 12,
     paddingVertical: 6,
-    borderRadius: 15,
+    borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#e0e0e0',
   },
   selectedSortButton: {
-    backgroundColor: '#FF6B35',
-    borderColor: '#FF6B35',
+    backgroundColor: '#079b59',
+    borderColor: '#079b59',
   },
   sortButtonText: {
     fontSize: 12,
@@ -428,9 +431,9 @@ const styles = StyleSheet.create({
   productCard: {
     flex: 1,
     backgroundColor: 'white',
-    borderRadius: 12,
+    borderRadius: 20,
     margin: 5,
-    shadowColor: '#000',
+    shadowColor: '#333333',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -456,7 +459,7 @@ const styles = StyleSheet.create({
   },
   productDescription: {
     fontSize: 12,
-    color: '#666',
+    color: '#6c757d',
     marginBottom: 8,
     lineHeight: 16,
   },
@@ -468,13 +471,13 @@ const styles = StyleSheet.create({
   productPrice: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#FF6B35',
+    color: '#079b59',
   },
   addButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     width: 30,
     height: 30,
-    borderRadius: 15,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -491,12 +494,12 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 16,
-    color: '#666',
+    color: '#6c757d',
     textAlign: 'center',
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#999',
+    color: '#6c757d',
     textAlign: 'center',
     marginTop: 8,
   },
@@ -504,7 +507,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 8,
     right: 8,
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 8,

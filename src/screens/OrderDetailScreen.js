@@ -118,19 +118,19 @@ const OrderDetailScreen = ({ route, navigation }) => {
       case 'pending':
         return '#F39C12';
       case 'confirmed':
-        return '#3498DB';
+        return '#079b59';
       case 'preparing':
         return '#9B59B6';
       case 'ready':
-        return '#2ECC71';
+        return '#28a745';
       case 'delivering':
-        return '#1ABC9C';
+        return '#079b59';
       case 'delivered':
-        return '#27AE60';
+        return '#28a745';
       case 'cancelled':
-        return '#E74C3C';
+        return '#dc3545';
       default:
-        return '#95A5A6';
+        return '#6c757d';
     }
   };
 
@@ -196,7 +196,7 @@ const OrderDetailScreen = ({ route, navigation }) => {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#FF6B35" />
+        <ActivityIndicator size="large" color="#079b59" />
         <Text style={styles.loadingText}>Загрузка заказа...</Text>
       </View>
     );
@@ -227,7 +227,7 @@ const OrderDetailScreen = ({ route, navigation }) => {
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
-          colors={['#FF6B35']}
+          colors={['#079b59']}
         />
       }
     >
@@ -400,7 +400,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F9FA',
   },
   header: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingTop: 50,
     paddingBottom: 20,
     paddingHorizontal: 20,
@@ -443,7 +443,7 @@ const styles = StyleSheet.create({
   },
   orderDate: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: '#6c757d',
     marginBottom: 4,
   },
   section: {
@@ -454,7 +454,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 15,
   },
   infoRow: {
@@ -465,13 +465,13 @@ const styles = StyleSheet.create({
   },
   infoLabel: {
     fontSize: 16,
-    color: '#2C3E50',
+    color: '#333333',
     flex: 1,
   },
   infoValue: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#2C3E50',
+    color: '#333333',
     flex: 1,
     textAlign: 'right',
   },
@@ -480,13 +480,13 @@ const styles = StyleSheet.create({
   },
   addressText: {
     fontSize: 16,
-    color: '#2C3E50',
+    color: '#333333',
     marginTop: 5,
     lineHeight: 22,
   },
   addressComment: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: '#6c757d',
     marginTop: 5,
     fontStyle: 'italic',
   },
@@ -496,7 +496,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingVertical: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
+    borderBottomColor: '#ecf0f1',
   },
   itemInfo: {
     flex: 1,
@@ -505,17 +505,17 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 4,
   },
   itemOption: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: '#6c757d',
     marginBottom: 2,
   },
   itemPrice: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: '#6c757d',
     marginTop: 4,
   },
   itemPricing: {
@@ -523,17 +523,17 @@ const styles = StyleSheet.create({
   },
   itemQuantity: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: '#6c757d',
     marginBottom: 4,
   },
   itemTotal: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#FF6B35',
+    color: '#079b59',
   },
   commentText: {
     fontSize: 16,
-    color: '#2C3E50',
+    color: '#333333',
     lineHeight: 22,
   },
   summarySection: {
@@ -549,36 +549,36 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 16,
-    color: '#2C3E50',
+    color: '#333333',
   },
   summaryValue: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#2C3E50',
+    color: '#333333',
   },
   summaryDivider: {
     height: 1,
-    backgroundColor: '#E1E8ED',
+    backgroundColor: '#e0e0e0',
     marginVertical: 10,
   },
   totalLabel: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#2C3E50',
+    color: '#333333',
   },
   totalValue: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FF6B35',
+    color: '#079b59',
   },
   actionsSection: {
     padding: 20,
     paddingBottom: 40,
   },
   cancelButton: {
-    backgroundColor: '#E74C3C',
+    backgroundColor: '#dc3545',
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: 20,
     alignItems: 'center',
     marginBottom: 12,
   },
@@ -591,9 +591,9 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   reorderButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: 20,
     alignItems: 'center',
   },
   reorderButtonText: {
@@ -610,7 +610,7 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#8E8E93',
+    color: '#6c757d',
   },
   errorContainer: {
     flex: 1,
@@ -622,17 +622,17 @@ const styles = StyleSheet.create({
   errorTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#E74C3C',
+    color: '#dc3545',
     marginBottom: 8,
   },
   errorText: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: '#6c757d',
     textAlign: 'center',
     marginBottom: 24,
   },
   retryButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,
@@ -643,9 +643,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   supportButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#079b59',
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: 20,
     alignItems: 'center',
     marginTop: 12,
   },

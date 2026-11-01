@@ -192,7 +192,7 @@ const LoginScreen = ({ navigation }) => {
                 <Icon
                   name={showPassword ? 'visibility' : 'visibility-off'}
                   size={24}
-                  color={loading ? '#ccc' : '#666'}
+                  color={loading ? '#ccc' : '#6c757d'}
                 />
               </TouchableOpacity>
             </View>
@@ -270,12 +270,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 10,
   },
   subtitle: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: '#6c757d',
     textAlign: 'center',
     lineHeight: 22,
   },
@@ -288,28 +288,28 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 8,
   },
   input: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
+    borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#E1E8ED',
+    borderColor: '#e0e0e0',
   },
   inputError: {
-    borderColor: '#E74C3C',
+    borderColor: '#dc3545',
   },
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
+    borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#E1E8ED',
+    borderColor: '#e0e0e0',
   },
   passwordInput: {
     flex: 1,
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   errorText: {
-    color: '#E74C3C',
+    color: '#dc3545',
     fontSize: 14,
     marginTop: 5,
   },
@@ -334,23 +334,23 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   forgotPasswordText: {
-    color: '#FF6B35',
+    color: '#079b59',
     fontSize: 14,
     fontWeight: '500',
   },
   loginButton: {
-    backgroundColor: '#FF6B35',
-    borderRadius: 12,
+    backgroundColor: '#079b59',
+    borderRadius: 20,
     paddingVertical: 16,
     alignItems: 'center',
     elevation: 2,
-    shadowColor: '#FF6B35',
+    shadowColor: '#079b59',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
   loginButtonDisabled: {
-    backgroundColor: '#BDC3C7',
+    backgroundColor: '#e0e0e0',
     elevation: 0,
     shadowOpacity: 0,
   },
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
   },
   registerText: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: '#6c757d',
     marginBottom: 10,
   },
   registerButton: {
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   registerButtonText: {
-    color: '#FF6B35',
+    color: '#079b59',
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   guestButtonText: {
-    color: '#8E8E93',
+    color: '#6c757d',
     fontSize: 14,
     textDecorationLine: 'underline',
   },

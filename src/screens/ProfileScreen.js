@@ -231,7 +231,7 @@ const ProfileScreen = ({ navigation }) => {
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
-          colors={['#FF6B35']}
+          colors={['#079b59']}
         />
       }
     >
@@ -434,7 +434,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F9FA',
   },
   header: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingTop: 50,
     paddingBottom: 20,
     paddingHorizontal: 20,
@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -483,17 +483,17 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 8,
   },
   userEmail: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: '#6c757d',
     marginBottom: 4,
   },
   userPhone: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: '#6c757d',
   },
   editForm: {
     width: '100%',
@@ -504,7 +504,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 8,
   },
   input: {
@@ -514,19 +514,19 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#E1E8ED',
+    borderColor: '#e0e0e0',
   },
   inputError: {
-    borderColor: '#E74C3C',
+    borderColor: '#dc3545',
   },
   // ИСПРАВЛЕНО ПРИ АУДИТЕ: в файле было ДВА определения errorText.
-  // Второе (серое #8E8E93, 16px, по центру) затирало первое (красное #E74C3C, 14px),
+  // Второе (серое #6c757d, 16px, по центру) затирало первое (красное #dc3545, 14px),
   // а используется этот стиль для подписей ошибок валидации полей формы
   // (строки с errors.first_name / last_name / phone / email).
   // В результате сообщения об ошибках рисовались светло-серым и были почти не видны.
   // Возвращено значение из ПЕРВОГО определения — семантически верное.
   errorText: {
-    color: '#E74C3C',
+    color: '#dc3545',
     fontSize: 14,
     marginTop: 5,
   },
@@ -537,7 +537,7 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     flex: 1,
-    backgroundColor: '#95A5A6',
+    backgroundColor: '#6c757d',
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
@@ -549,13 +549,13 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     flex: 1,
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
   },
   saveButtonDisabled: {
-    backgroundColor: '#BDC3C7',
+    backgroundColor: '#e0e0e0',
     opacity: 0.6,
   },
   loadingContainer: {
@@ -567,7 +567,7 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#8E8E93',
+    color: '#6c757d',
   },
   errorContainer: {
     flex: 1,
@@ -576,7 +576,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
   },
   retryButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,
@@ -602,7 +602,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
+    borderBottomColor: '#ecf0f1',
   },
   menuItemLeft: {
     flexDirection: 'row',
@@ -614,20 +614,20 @@ const styles = StyleSheet.create({
   },
   menuTitle: {
     fontSize: 16,
-    color: '#2C3E50',
+    color: '#333333',
   },
   menuArrow: {
     fontSize: 20,
-    color: '#8E8E93',
+    color: '#6c757d',
   },
   logoutSection: {
     padding: 20,
     paddingBottom: 40,
   },
   logoutButton: {
-    backgroundColor: '#E74C3C',
+    backgroundColor: '#dc3545',
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: 20,
     alignItems: 'center',
   },
   logoutButtonText: {
@@ -644,22 +644,22 @@ const styles = StyleSheet.create({
   guestTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 16,
     textAlign: 'center',
   },
   guestText: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: '#6c757d',
     textAlign: 'center',
     marginBottom: 32,
     lineHeight: 22,
   },
   loginButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingHorizontal: 32,
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: 20,
     marginBottom: 12,
     minWidth: 200,
     alignItems: 'center',
@@ -673,14 +673,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     paddingHorizontal: 32,
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#FF6B35',
+    borderColor: '#079b59',
     minWidth: 200,
     alignItems: 'center',
   },
   registerButtonText: {
-    color: '#FF6B35',
+    color: '#079b59',
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -692,7 +692,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 15,
   },
   statsGrid: {
@@ -706,23 +706,23 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FF6B35',
+    color: '#079b59',
     marginBottom: 5,
   },
   statLabel: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: '#6c757d',
     textAlign: 'center',
   },
   joinDateContainer: {
     alignItems: 'center',
     paddingTop: 15,
     borderTopWidth: 1,
-    borderTopColor: '#F0F0F0',
+    borderTopColor: '#ecf0f1',
   },
   joinDateText: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: '#6c757d',
   },
 });
 

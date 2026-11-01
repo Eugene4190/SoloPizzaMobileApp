@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchFeaturedProducts, fetchCategories } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
 import { catalogService, productService, promoService } from '../services';
+import DemoBanner from '../components/ui/DemoBanner';
 
 const { width } = Dimensions.get('window');
 
@@ -32,7 +33,7 @@ const HomeScreen = ({ navigation }) => {
       id: 1,
       title: 'Скидка 20%',
       subtitle: 'На все пиццы до конца недели',
-      backgroundColor: '#FF6B35',
+      backgroundColor: '#079b59',
     },
     {
       id: 2,
@@ -44,7 +45,7 @@ const HomeScreen = ({ navigation }) => {
       id: 3,
       title: 'Быстрая доставка',
       subtitle: 'Доставим за 30 минут или пицца бесплатно',
-      backgroundColor: '#007BFF',
+      backgroundColor: '#079b59',
     },
   ]);
 
@@ -72,7 +73,7 @@ const HomeScreen = ({ navigation }) => {
           id: promo.id,
           title: promo.title,
           subtitle: promo.description || promo.subtitle,
-          backgroundColor: promo.background_color || '#FF6B35',
+          backgroundColor: promo.background_color || '#079b59',
         }));
         setBanners(apiBanners);
       }
@@ -171,7 +172,7 @@ const HomeScreen = ({ navigation }) => {
   if (loading && !featuredProducts?.length && !categories?.length) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#FF6B35" />
+        <ActivityIndicator size="large" color="#079b59" />
         <Text style={styles.loadingText}>Загрузка...</Text>
       </View>
     );
@@ -184,6 +185,8 @@ const HomeScreen = ({ navigation }) => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
+      <DemoBanner />
+
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>SoloPizza</Text>
@@ -291,33 +294,33 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#666',
+    color: '#6c757d',
   },
   header: {
     paddingHorizontal: 20,
     paddingTop: 50,
     paddingBottom: 20,
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
   },
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#ffffff',
     textAlign: 'center',
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#fff',
+    color: '#ffffff',
     textAlign: 'center',
     marginTop: 5,
     opacity: 0.9,
   },
   bannerContainer: {
     margin: 20,
-    borderRadius: 15,
+    borderRadius: 20,
     overflow: 'hidden',
     elevation: 5,
-    shadowColor: '#000',
+    shadowColor: '#333333',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -331,13 +334,13 @@ const styles = StyleSheet.create({
   bannerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#ffffff',
     textAlign: 'center',
     marginBottom: 5,
   },
   bannerSubtitle: {
     fontSize: 16,
-    color: '#fff',
+    color: '#ffffff',
     textAlign: 'center',
   },
   bannerIndicators: {
@@ -350,7 +353,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     marginHorizontal: 4,
   },
   section: {
@@ -369,13 +372,13 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   seeAllText: {
-    color: '#FF6B35',
+    color: '#079b59',
     fontSize: 16,
     fontWeight: '600',
   },
   emptyText: {
     fontSize: 16,
-    color: '#666',
+    color: '#6c757d',
     textAlign: 'center',
     fontStyle: 'italic',
   },
@@ -391,7 +394,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     marginBottom: 8,
   },
   categoryName: {
@@ -404,12 +407,12 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   productCard: {
-    backgroundColor: '#fff',
-    borderRadius: 15,
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
     marginRight: 15,
     width: 160,
     elevation: 3,
-    shadowColor: '#000',
+    shadowColor: '#333333',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
@@ -431,7 +434,7 @@ const styles = StyleSheet.create({
   },
   productDescription: {
     fontSize: 12,
-    color: '#666',
+    color: '#6c757d',
     marginBottom: 8,
     lineHeight: 16,
   },
@@ -443,13 +446,13 @@ const styles = StyleSheet.create({
   productPrice: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#FF6B35',
+    color: '#079b59',
   },
   addButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     width: 30,
     height: 30,
-    borderRadius: 15,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -465,18 +468,18 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   addButtonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
   },
   infoSection: {
     marginHorizontal: 20,
     marginBottom: 30,
-    backgroundColor: '#fff',
-    borderRadius: 15,
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
     padding: 20,
     elevation: 3,
-    shadowColor: '#000',
+    shadowColor: '#333333',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
@@ -499,7 +502,7 @@ const styles = StyleSheet.create({
   },
   infoItemText: {
     fontSize: 14,
-    color: '#666',
+    color: '#6c757d',
     lineHeight: 20,
   },
 });

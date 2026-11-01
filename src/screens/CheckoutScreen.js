@@ -583,7 +583,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F9FA',
   },
   header: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingTop: 50,
     paddingBottom: 20,
     paddingHorizontal: 20,
@@ -602,7 +602,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 15,
   },
   optionsContainer: {
@@ -616,17 +616,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#E1E8ED',
+    borderColor: '#e0e0e0',
     alignItems: 'center',
   },
   optionButtonActive: {
-    backgroundColor: '#FF6B35',
-    borderColor: '#FF6B35',
+    backgroundColor: '#079b59',
+    borderColor: '#079b59',
   },
   optionText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#2C3E50',
+    color: '#333333',
     textAlign: 'center',
   },
   optionTextActive: {
@@ -645,7 +645,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 8,
   },
   input: {
@@ -655,17 +655,17 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#E1E8ED',
+    borderColor: '#e0e0e0',
   },
   inputError: {
-    borderColor: '#E74C3C',
+    borderColor: '#dc3545',
   },
   textArea: {
     height: 80,
     textAlignVertical: 'top',
   },
   errorText: {
-    color: '#E74C3C',
+    color: '#dc3545',
     fontSize: 14,
     marginTop: 5,
   },
@@ -675,7 +675,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
+    borderBottomColor: '#ecf0f1',
   },
   itemInfo: {
     flex: 1,
@@ -684,12 +684,12 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 4,
   },
   itemOption: {
     fontSize: 12,
-    color: '#8E8E93',
+    color: '#6c757d',
     marginBottom: 2,
   },
   itemPricing: {
@@ -697,13 +697,13 @@ const styles = StyleSheet.create({
   },
   itemQuantity: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: '#6c757d',
     marginBottom: 2,
   },
   itemPrice: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#FF6B35',
+    color: '#079b59',
   },
   summarySection: {
     backgroundColor: '#FFFFFF',
@@ -718,45 +718,45 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 16,
-    color: '#2C3E50',
+    color: '#333333',
   },
   summaryValue: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#2C3E50',
+    color: '#333333',
   },
   summaryDivider: {
     height: 1,
-    backgroundColor: '#E1E8ED',
+    backgroundColor: '#e0e0e0',
     marginVertical: 10,
   },
   totalLabel: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#2C3E50',
+    color: '#333333',
   },
   totalValue: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FF6B35',
+    color: '#079b59',
   },
   bottomSection: {
     padding: 20,
     paddingBottom: 40,
   },
   orderButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: 20,
     alignItems: 'center',
     elevation: 2,
-    shadowColor: '#FF6B35',
+    shadowColor: '#079b59',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
   orderButtonDisabled: {
-    backgroundColor: '#BDC3C7',
+    backgroundColor: '#e0e0e0',
     elevation: 0,
     shadowOpacity: 0,
   },

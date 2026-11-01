@@ -385,7 +385,7 @@ const CartScreen = ({ navigation }) => {
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={handleRefresh}
-                colors={['#FF6B35']}
+                colors={['#079b59']}
               />
             }
             ListFooterComponent={renderCartSummary}
@@ -420,14 +420,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F9FA',
   },
   header: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingTop: 50,
     paddingBottom: 24,
     paddingHorizontal: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: '#333333',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -458,10 +458,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     marginHorizontal: 20,
     marginTop: 16,
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 20,
     flexDirection: 'row',
-    shadowColor: '#000',
+    shadowColor: '#333333',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 8,
@@ -470,7 +470,7 @@ const styles = StyleSheet.create({
   itemImage: {
     width: 90,
     height: 90,
-    borderRadius: 12,
+    borderRadius: 20,
   },
   itemInfo: {
     flex: 1,
@@ -480,13 +480,13 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: '#333333',
     marginBottom: 8,
     lineHeight: 22,
   },
   itemOption: {
     fontSize: 14,
-    color: '#6B7280',
+    color: '#6c757d',
     marginBottom: 4,
     fontWeight: '500',
   },
@@ -495,13 +495,13 @@ const styles = StyleSheet.create({
   },
   itemPrice: {
     fontSize: 14,
-    color: '#6B7280',
+    color: '#6c757d',
     fontWeight: '500',
   },
   itemTotal: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#FF6B35',
+    color: '#079b59',
     marginTop: 4,
   },
   quantityControls: {
@@ -512,11 +512,11 @@ const styles = StyleSheet.create({
   quantityButton: {
     width: 36,
     height: 36,
-    borderRadius: 18,
-    backgroundColor: '#FF6B35',
+    borderRadius: 20,
+    backgroundColor: '#079b59',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#FF6B35',
+    shadowColor: '#079b59',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -530,7 +530,7 @@ const styles = StyleSheet.create({
   quantityText: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: '#333333',
     marginVertical: 10,
     minWidth: 30,
     textAlign: 'center',
@@ -538,12 +538,12 @@ const styles = StyleSheet.create({
   removeButton: {
     width: 36,
     height: 36,
-    borderRadius: 18,
-    backgroundColor: '#EF4444',
+    borderRadius: 20,
+    backgroundColor: '#dc3545',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
-    shadowColor: '#EF4444',
+    shadowColor: '#dc3545',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -557,9 +557,9 @@ const styles = StyleSheet.create({
   summaryContainer: {
     backgroundColor: '#FFFFFF',
     margin: 20,
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 24,
-    shadowColor: '#000',
+    shadowColor: '#333333',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 8,
@@ -573,28 +573,28 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 16,
-    color: '#6B7280',
+    color: '#6c757d',
     fontWeight: '500',
   },
   summaryValue: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1A1A1A',
+    color: '#333333',
   },
   summaryDivider: {
     height: 1,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: '#e0e0e0',
     marginVertical: 12,
   },
   totalLabel: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: '#333333',
   },
   totalValue: {
     fontSize: 22,
     fontWeight: '700',
-    color: '#FF6B35',
+    color: '#079b59',
   },
   emptyContainer: {
     flex: 1,
@@ -604,30 +604,30 @@ const styles = StyleSheet.create({
   },
   emptyIcon: {
     fontSize: 100,
-    color: '#D1D5DB',
+    color: '#e0e0e0',
     marginBottom: 24,
   },
   emptyTitle: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: '#333333',
     marginBottom: 12,
     textAlign: 'center',
   },
   emptySubtitle: {
     fontSize: 16,
-    color: '#6B7280',
+    color: '#6c757d',
     textAlign: 'center',
     lineHeight: 24,
     marginBottom: 32,
     fontWeight: '500',
   },
   continueButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingHorizontal: 32,
     paddingVertical: 16,
-    borderRadius: 16,
-    shadowColor: '#FF6B35',
+    borderRadius: 20,
+    shadowColor: '#079b59',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -644,8 +644,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 20,
     borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
-    shadowColor: '#000',
+    borderTopColor: '#e0e0e0',
+    shadowColor: '#333333',
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
@@ -659,19 +659,19 @@ const styles = StyleSheet.create({
   },
   bottomTotalLabel: {
     fontSize: 18,
-    color: '#2C3E50',
+    color: '#333333',
   },
   bottomTotalValue: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FF6B35',
+    color: '#079b59',
   },
   checkoutButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     paddingVertical: 18,
-    borderRadius: 16,
+    borderRadius: 20,
     alignItems: 'center',
-    shadowColor: '#FF6B35',
+    shadowColor: '#079b59',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,

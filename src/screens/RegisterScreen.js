@@ -429,12 +429,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 10,
   },
   subtitle: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: '#6c757d',
     textAlign: 'center',
     lineHeight: 22,
   },
@@ -447,29 +447,29 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#2C3E50',
+    color: '#333333',
     marginBottom: 8,
   },
   input: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
+    borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#E1E8ED',
+    borderColor: '#e0e0e0',
   },
   inputError: {
-    borderColor: '#FF4444',
+    borderColor: '#dc3545',
     borderWidth: 1,
   },
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
+    borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#E1E8ED',
+    borderColor: '#e0e0e0',
   },
   passwordInput: {
     flex: 1,
@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   errorText: {
-    color: '#FF4444',
+    color: '#dc3545',
     fontSize: 12,
     marginTop: 4,
     marginLeft: 4,
@@ -504,13 +504,13 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: '#E1E8ED',
+    borderColor: '#e0e0e0',
     justifyContent: 'center',
     alignItems: 'center',
   },
   checkboxChecked: {
-    backgroundColor: '#FF6B35',
-    borderColor: '#FF6B35',
+    backgroundColor: '#079b59',
+    borderColor: '#079b59',
   },
   checkmark: {
     color: '#FFFFFF',
@@ -522,20 +522,20 @@ const styles = StyleSheet.create({
   },
   termsText: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: '#6c757d',
     lineHeight: 20,
   },
   termsLink: {
-    color: '#FF6B35',
+    color: '#079b59',
     textDecorationLine: 'underline',
   },
   registerButton: {
-    backgroundColor: '#FF6B35',
-    borderRadius: 12,
+    backgroundColor: '#079b59',
+    borderRadius: 20,
     paddingVertical: 16,
     alignItems: 'center',
     elevation: 2,
-    shadowColor: '#FF6B35',
+    shadowColor: '#079b59',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -551,7 +551,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   checkboxError: {
-    borderColor: '#FF4444',
+    borderColor: '#dc3545',
   },
   disabledText: {
     color: '#ccc',
@@ -561,7 +561,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: '#6c757d',
     marginBottom: 10,
   },
   loginButton: {
@@ -569,7 +569,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   loginButtonText: {
-    color: '#FF6B35',
+    color: '#079b59',
     fontSize: 16,
     fontWeight: 'bold',
   },

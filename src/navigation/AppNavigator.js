@@ -1,5 +1,19 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { light } from '../theme/colors';
+
+// Тема навигации = палитра сайта (src/theme/colors.js): заголовки, таб-бар, фон.
+const navTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: light.accent,
+    background: light.bg,
+    card: light.headerBg,
+    text: light.text,
+    border: light.divider,
+  },
+};
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSelector } from 'react-redux';
@@ -41,12 +55,12 @@ function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#FF6B35',
-        tabBarInactiveTintColor: '#666',
+        tabBarActiveTintColor: '#079b59',
+        tabBarInactiveTintColor: '#6c757d',
         tabBarStyle: {
-          backgroundColor: '#fff',
+          backgroundColor: '#ffffff',
           borderTopWidth: 1,
-          borderTopColor: '#eee',
+          borderTopColor: '#e0e0e0',
           height: 60,
           paddingBottom: 5,
         },
@@ -100,11 +114,11 @@ function TabNavigator() {
 // Главный навигатор приложения
 export default function AppNavigator() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={navTheme}>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#FF6B35',
+            backgroundColor: '#079b59',
           },
           headerTintColor: '#FFFFFF',
           headerTitleStyle: {
@@ -160,7 +174,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -6,
     top: -3,
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#079b59',
     borderRadius: 6,
     width: 12,
     height: 12,
