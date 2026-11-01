@@ -18,7 +18,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'web-dist'),
     filename: 'bundle.js',
-    publicPath: '/',
+    publicPath: './',
   },
   devServer: {
     host: '0.0.0.0',
