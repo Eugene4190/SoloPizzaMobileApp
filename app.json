@@ -1,0 +1,9 @@
+{
+  "name": "SoloPizzaMobileApp",
+  "displayName": "SoloPizzaMobileApp",
+  "extra": {
+    "eas": {
+      "projectId": "73a74e7e-e527-46f5-8e91-d6f206c4ce73"
+    }
+  }
+}
