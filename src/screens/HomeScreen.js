@@ -373,7 +373,7 @@ const makeStyles = (colors) => StyleSheet.create({
   sectionTitle: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#333',
+    color: colors.text,
   },
   seeAllText: {
     color: colors.accent,
@@ -403,7 +403,7 @@ const makeStyles = (colors) => StyleSheet.create({
   },
   categoryName: {
     fontSize: 12,
-    color: '#333',
+    color: colors.text,
     textAlign: 'center',
     fontWeight: '500',
   },
@@ -433,7 +433,7 @@ const makeStyles = (colors) => StyleSheet.create({
   productName: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: colors.text,
     marginBottom: 4,
   },
   productDescription: {
@@ -491,7 +491,7 @@ const makeStyles = (colors) => StyleSheet.create({
   infoTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
+    color: colors.text,
     marginBottom: 15,
     textAlign: 'center',
   },
@@ -501,7 +501,7 @@ const makeStyles = (colors) => StyleSheet.create({
   infoItemTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: colors.text,
     marginBottom: 5,
   },
   infoItemText: {

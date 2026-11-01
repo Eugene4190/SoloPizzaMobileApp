@@ -338,13 +338,13 @@ const makeStyles = (colors) => StyleSheet.create({
     borderRadius: 8,
   },
   retryButtonText: {
-    color: 'white',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '600',
   },
   searchContainer: {
     padding: 15,
-    backgroundColor: 'white',
+    backgroundColor: colors.cardBg,
     borderBottomWidth: 1,
     borderBottomColor: colors.divider,
   },
@@ -358,7 +358,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderColor: colors.divider,
   },
   categoriesContainer: {
-    backgroundColor: 'white',
+    backgroundColor: colors.cardBg,
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: colors.divider,
@@ -381,14 +381,14 @@ const makeStyles = (colors) => StyleSheet.create({
   },
   categoryText: {
     fontSize: 14,
-    color: '#333',
+    color: colors.text,
     fontWeight: '500',
   },
   selectedCategoryText: {
-    color: 'white',
+    color: colors.buttonText,
   },
   sortContainer: {
-    backgroundColor: 'white',
+    backgroundColor: colors.cardBg,
     padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: colors.divider,
@@ -397,7 +397,7 @@ const makeStyles = (colors) => StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 10,
-    color: '#333',
+    color: colors.text,
   },
   sortButtons: {
     flexDirection: 'row',
@@ -417,18 +417,18 @@ const makeStyles = (colors) => StyleSheet.create({
   },
   sortButtonText: {
     fontSize: 12,
-    color: '#333',
+    color: colors.text,
     fontWeight: '500',
   },
   selectedSortButtonText: {
-    color: 'white',
+    color: colors.buttonText,
   },
   productsList: {
     padding: 15,
   },
   productCard: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: colors.cardBg,
     borderRadius: 20,
     margin: 5,
     shadowColor: colors.text,
@@ -452,7 +452,7 @@ const makeStyles = (colors) => StyleSheet.create({
   productName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: colors.text,
     marginBottom: 4,
   },
   productDescription: {
@@ -480,7 +480,7 @@ const makeStyles = (colors) => StyleSheet.create({
     alignItems: 'center',
   },
   addButtonText: {
-    color: 'white',
+    color: colors.buttonText,
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -512,7 +512,7 @@ const makeStyles = (colors) => StyleSheet.create({
     zIndex: 1,
   },
   popularText: {
-    color: 'white',
+    color: colors.buttonText,
     fontSize: 10,
     fontWeight: '600',
   },

@@ -10,11 +10,14 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
+import useAppTheme from '../theme/useAppTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, updateProfile } from '../store/slices/authSlice';
 import { userService, authService } from '../services';
 
 const ProfileScreen = ({ navigation }) => {
+  const { colors } = useAppTheme();
+  const styles = makeStyles(colors);
   const dispatch = useDispatch();
   const { user, isLoading } = useSelector((state) => state.auth);
   const [isEditing, setIsEditing] = useState(false);
@@ -424,7 +427,7 @@ const ProfileScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F9FA',
@@ -434,7 +437,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F9FA',
   },
   header: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingTop: 50,
     paddingBottom: 20,
     paddingHorizontal: 20,
@@ -468,7 +471,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -483,17 +486,17 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 8,
   },
   userEmail: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginBottom: 4,
   },
   userPhone: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
   },
   editForm: {
     width: '100%',
@@ -504,7 +507,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 8,
   },
   input: {
@@ -514,10 +517,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
   },
   inputError: {
-    borderColor: '#dc3545',
+    borderColor: colors.error,
   },
   // ИСПРАВЛЕНО ПРИ АУДИТЕ: в файле было ДВА определения errorText.
   // Второе (серое #6c757d, 16px, по центру) затирало первое (красное #dc3545, 14px),
@@ -526,7 +529,7 @@ const styles = StyleSheet.create({
   // В результате сообщения об ошибках рисовались светло-серым и были почти не видны.
   // Возвращено значение из ПЕРВОГО определения — семантически верное.
   errorText: {
-    color: '#dc3545',
+    color: colors.error,
     fontSize: 14,
     marginTop: 5,
   },
@@ -537,7 +540,7 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     flex: 1,
-    backgroundColor: '#6c757d',
+    backgroundColor: colors.textMuted,
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
@@ -549,13 +552,13 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     flex: 1,
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
   },
   saveButtonDisabled: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: colors.divider,
     opacity: 0.6,
   },
   loadingContainer: {
@@ -567,7 +570,7 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
   },
   errorContainer: {
     flex: 1,
@@ -576,7 +579,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
   },
   retryButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,
@@ -602,7 +605,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#ecf0f1',
+    borderBottomColor: colors.hoverBg,
   },
   menuItemLeft: {
     flexDirection: 'row',
@@ -614,18 +617,18 @@ const styles = StyleSheet.create({
   },
   menuTitle: {
     fontSize: 16,
-    color: '#333333',
+    color: colors.text,
   },
   menuArrow: {
     fontSize: 20,
-    color: '#6c757d',
+    color: colors.textMuted,
   },
   logoutSection: {
     padding: 20,
     paddingBottom: 40,
   },
   logoutButton: {
-    backgroundColor: '#dc3545',
+    backgroundColor: colors.error,
     paddingVertical: 16,
     borderRadius: 20,
     alignItems: 'center',
@@ -644,19 +647,19 @@ const styles = StyleSheet.create({
   guestTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 16,
     textAlign: 'center',
   },
   guestText: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     textAlign: 'center',
     marginBottom: 32,
     lineHeight: 22,
   },
   loginButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingHorizontal: 32,
     paddingVertical: 16,
     borderRadius: 20,
@@ -675,12 +678,12 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#079b59',
+    borderColor: colors.accent,
     minWidth: 200,
     alignItems: 'center',
   },
   registerButtonText: {
-    color: '#079b59',
+    color: colors.accent,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -692,7 +695,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 15,
   },
   statsGrid: {
@@ -706,23 +709,23 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#079b59',
+    color: colors.accent,
     marginBottom: 5,
   },
   statLabel: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
     textAlign: 'center',
   },
   joinDateContainer: {
     alignItems: 'center',
     paddingTop: 15,
     borderTopWidth: 1,
-    borderTopColor: '#ecf0f1',
+    borderTopColor: colors.hoverBg,
   },
   joinDateText: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
   },
 });
 

@@ -11,11 +11,14 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
+import useAppTheme from '../theme/useAppTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, clearError } from '../store/slices/authSlice';
 import { authService } from '../services';
 
 const RegisterScreen = ({ navigation }) => {
+  const { colors } = useAppTheme();
+  const styles = makeStyles(colors);
   const dispatch = useDispatch();
   const { isLoading, error, isAuthenticated } = useSelector((state) => state.auth);
 
@@ -412,7 +415,7 @@ const RegisterScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F9FA',
@@ -429,12 +432,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 10,
   },
   subtitle: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     textAlign: 'center',
     lineHeight: 22,
   },
@@ -447,7 +450,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 8,
   },
   input: {
@@ -457,10 +460,10 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
   },
   inputError: {
-    borderColor: '#dc3545',
+    borderColor: colors.error,
     borderWidth: 1,
   },
   passwordContainer: {
@@ -469,7 +472,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
   },
   passwordInput: {
     flex: 1,
@@ -485,7 +488,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   errorText: {
-    color: '#dc3545',
+    color: colors.error,
     fontSize: 12,
     marginTop: 4,
     marginLeft: 4,
@@ -504,13 +507,13 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
     justifyContent: 'center',
     alignItems: 'center',
   },
   checkboxChecked: {
-    backgroundColor: '#079b59',
-    borderColor: '#079b59',
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
   },
   checkmark: {
     color: '#FFFFFF',
@@ -522,20 +525,20 @@ const styles = StyleSheet.create({
   },
   termsText: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
     lineHeight: 20,
   },
   termsLink: {
-    color: '#079b59',
+    color: colors.accent,
     textDecorationLine: 'underline',
   },
   registerButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     borderRadius: 20,
     paddingVertical: 16,
     alignItems: 'center',
     elevation: 2,
-    shadowColor: '#079b59',
+    shadowColor: colors.accent,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -551,7 +554,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   checkboxError: {
-    borderColor: '#dc3545',
+    borderColor: colors.error,
   },
   disabledText: {
     color: '#ccc',
@@ -561,7 +564,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginBottom: 10,
   },
   loginButton: {
@@ -569,7 +572,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   loginButtonText: {
-    color: '#079b59',
+    color: colors.accent,
     fontSize: 16,
     fontWeight: 'bold',
   },

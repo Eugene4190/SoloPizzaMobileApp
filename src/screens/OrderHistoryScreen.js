@@ -9,6 +9,7 @@ import {
   RefreshControl,
   Alert,
 } from 'react-native';
+import useAppTheme from '../theme/useAppTheme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrderHistory, cancelOrder } from '../store/slices/orderSlice';
@@ -18,6 +19,8 @@ import { orderService } from '../services';
 import Icon from '../components/ui/Icon';
 
 const OrderHistoryScreen = ({ navigation }) => {
+  const { colors } = useAppTheme();
+  const styles = makeStyles(colors);
   const dispatch = useDispatch();
   const { orders, isLoading, error } = useSelector((state) => state.order);
   const { user } = useSelector((state) => state.auth);
@@ -387,13 +390,13 @@ const OrderHistoryScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F9FA',
   },
   header: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingTop: 10,
     paddingBottom: 20,
     paddingHorizontal: 20,
@@ -423,7 +426,7 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 12,
     elevation: 2,
-    shadowColor: '#333333',
+    shadowColor: colors.text,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
@@ -440,12 +443,12 @@ const styles = StyleSheet.create({
   orderNumber: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 4,
   },
   orderDate: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
   },
   statusContainer: {
     alignItems: 'flex-end',
@@ -467,11 +470,11 @@ const styles = StyleSheet.create({
   },
   deliveryType: {
     fontSize: 14,
-    color: '#333333',
+    color: colors.text,
   },
   paymentMethod: {
     fontSize: 14,
-    color: '#333333',
+    color: colors.text,
   },
   orderItems: {
     marginBottom: 12,
@@ -479,17 +482,17 @@ const styles = StyleSheet.create({
   itemsTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 6,
   },
   itemText: {
     fontSize: 13,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginBottom: 2,
   },
   moreItems: {
     fontSize: 13,
-    color: '#6c757d',
+    color: colors.textMuted,
     fontStyle: 'italic',
   },
   orderFooter: {
@@ -497,16 +500,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderTopWidth: 1,
-    borderTopColor: '#ecf0f1',
+    borderTopColor: colors.hoverBg,
     paddingTop: 12,
   },
   totalAmount: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#079b59',
+    color: colors.accent,
   },
   cancelButton: {
-    backgroundColor: '#dc3545',
+    backgroundColor: colors.error,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 6,
@@ -523,17 +526,17 @@ const styles = StyleSheet.create({
   emptyStateTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 8,
   },
   emptyStateText: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     textAlign: 'center',
     marginBottom: 24,
   },
   shopButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,
@@ -552,17 +555,17 @@ const styles = StyleSheet.create({
   errorTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#dc3545',
+    color: colors.error,
     marginBottom: 8,
   },
   errorText: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     textAlign: 'center',
     marginBottom: 24,
   },
   retryButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,
@@ -581,17 +584,17 @@ const styles = StyleSheet.create({
   authTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 8,
   },
   authText: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     textAlign: 'center',
     marginBottom: 24,
   },
   loginButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,
@@ -609,7 +612,7 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
   },
   orderActions: {
     flexDirection: 'row',
@@ -617,7 +620,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     paddingTop: 12,
     borderTopWidth: 1,
-    borderTopColor: '#ecf0f1',
+    borderTopColor: colors.hoverBg,
   },
   actionButton: {
     flexDirection: 'row',
@@ -625,10 +628,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 6,
-    backgroundColor: '#e8f5ee',
+    backgroundColor: colors.accentRgba,
   },
   actionButtonText: {
-    color: '#079b59',
+    color: colors.accent,
     fontSize: 14,
     fontWeight: '600',
     marginLeft: 4,
@@ -640,18 +643,18 @@ const styles = StyleSheet.create({
   footerLoaderText: {
     marginTop: 8,
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
   },
   emptyText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
     marginTop: 16,
     marginBottom: 8,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
     textAlign: 'center',
   },
 });

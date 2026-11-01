@@ -11,11 +11,14 @@ import {
   RefreshControl,
   Linking,
 } from 'react-native';
+import useAppTheme from '../theme/useAppTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrderDetail, cancelOrder } from '../store/slices/orderSlice';
 import { orderService } from '../services';
 
 const OrderDetailScreen = ({ route, navigation }) => {
+  const { colors } = useAppTheme();
+  const styles = makeStyles(colors);
   const { orderId, order: routeOrder } = route.params;
   const dispatch = useDispatch();
   const { currentOrder, isLoading, error } = useSelector((state) => state.order);
@@ -394,13 +397,13 @@ const OrderDetailScreen = ({ route, navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F9FA',
   },
   header: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingTop: 50,
     paddingBottom: 20,
     paddingHorizontal: 20,
@@ -443,7 +446,7 @@ const styles = StyleSheet.create({
   },
   orderDate: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginBottom: 4,
   },
   section: {
@@ -454,7 +457,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 15,
   },
   infoRow: {
@@ -465,13 +468,13 @@ const styles = StyleSheet.create({
   },
   infoLabel: {
     fontSize: 16,
-    color: '#333333',
+    color: colors.text,
     flex: 1,
   },
   infoValue: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#333333',
+    color: colors.text,
     flex: 1,
     textAlign: 'right',
   },
@@ -480,13 +483,13 @@ const styles = StyleSheet.create({
   },
   addressText: {
     fontSize: 16,
-    color: '#333333',
+    color: colors.text,
     marginTop: 5,
     lineHeight: 22,
   },
   addressComment: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginTop: 5,
     fontStyle: 'italic',
   },
@@ -496,7 +499,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingVertical: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#ecf0f1',
+    borderBottomColor: colors.hoverBg,
   },
   itemInfo: {
     flex: 1,
@@ -505,17 +508,17 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 4,
   },
   itemOption: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginBottom: 2,
   },
   itemPrice: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginTop: 4,
   },
   itemPricing: {
@@ -523,17 +526,17 @@ const styles = StyleSheet.create({
   },
   itemQuantity: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginBottom: 4,
   },
   itemTotal: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#079b59',
+    color: colors.accent,
   },
   commentText: {
     fontSize: 16,
-    color: '#333333',
+    color: colors.text,
     lineHeight: 22,
   },
   summarySection: {
@@ -549,34 +552,34 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 16,
-    color: '#333333',
+    color: colors.text,
   },
   summaryValue: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#333333',
+    color: colors.text,
   },
   summaryDivider: {
     height: 1,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: colors.divider,
     marginVertical: 10,
   },
   totalLabel: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
   },
   totalValue: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#079b59',
+    color: colors.accent,
   },
   actionsSection: {
     padding: 20,
     paddingBottom: 40,
   },
   cancelButton: {
-    backgroundColor: '#dc3545',
+    backgroundColor: colors.error,
     paddingVertical: 16,
     borderRadius: 20,
     alignItems: 'center',
@@ -591,7 +594,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   reorderButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingVertical: 16,
     borderRadius: 20,
     alignItems: 'center',
@@ -610,7 +613,7 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
   },
   errorContainer: {
     flex: 1,
@@ -622,17 +625,17 @@ const styles = StyleSheet.create({
   errorTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#dc3545',
+    color: colors.error,
     marginBottom: 8,
   },
   errorText: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     textAlign: 'center',
     marginBottom: 24,
   },
   retryButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,
@@ -643,7 +646,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   supportButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingVertical: 16,
     borderRadius: 20,
     alignItems: 'center',

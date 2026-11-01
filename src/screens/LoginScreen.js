@@ -12,6 +12,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import useAppTheme from '../theme/useAppTheme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 // ИСПРАВЛЕНО ПРИ АУДИТЕ: прямой импорт react-native-vector-icons в v10.x
 // не тянет шрифт — иконки рендерились пустыми квадратами.
@@ -19,6 +20,8 @@ import Icon from '../components/ui/Icon';
 import { authService } from '../services';
 
 const LoginScreen = ({ navigation }) => {
+  const { colors } = useAppTheme();
+  const styles = makeStyles(colors);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -252,7 +255,7 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F9FA',
@@ -270,12 +273,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 10,
   },
   subtitle: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     textAlign: 'center',
     lineHeight: 22,
   },
@@ -288,7 +291,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 8,
   },
   input: {
@@ -298,10 +301,10 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
   },
   inputError: {
-    borderColor: '#dc3545',
+    borderColor: colors.error,
   },
   passwordContainer: {
     flexDirection: 'row',
@@ -309,7 +312,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
   },
   passwordInput: {
     flex: 1,
@@ -325,7 +328,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   errorText: {
-    color: '#dc3545',
+    color: colors.error,
     fontSize: 14,
     marginTop: 5,
   },
@@ -334,23 +337,23 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   forgotPasswordText: {
-    color: '#079b59',
+    color: colors.accent,
     fontSize: 14,
     fontWeight: '500',
   },
   loginButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     borderRadius: 20,
     paddingVertical: 16,
     alignItems: 'center',
     elevation: 2,
-    shadowColor: '#079b59',
+    shadowColor: colors.accent,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
   loginButtonDisabled: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: colors.divider,
     elevation: 0,
     shadowOpacity: 0,
   },
@@ -365,7 +368,7 @@ const styles = StyleSheet.create({
   },
   registerText: {
     fontSize: 16,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginBottom: 10,
   },
   registerButton: {
@@ -373,7 +376,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   registerButtonText: {
-    color: '#079b59',
+    color: colors.accent,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -385,7 +388,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   guestButtonText: {
-    color: '#6c757d',
+    color: colors.textMuted,
     fontSize: 14,
     textDecorationLine: 'underline',
   },

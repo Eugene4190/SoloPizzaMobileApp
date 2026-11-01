@@ -10,12 +10,15 @@ import {
   Alert,
   FlatList,
 } from 'react-native';
+import useAppTheme from '../theme/useAppTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrder } from '../store/slices/orderSlice';
 import { clearCart } from '../store/slices/cartSlice';
 import { orderService, cartService, userService } from '../services';
 
 const CheckoutScreen = ({ navigation }) => {
+  const { colors } = useAppTheme();
+  const styles = makeStyles(colors);
   const dispatch = useDispatch();
   const { items, totalAmount } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
@@ -577,13 +580,13 @@ const CheckoutScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F9FA',
   },
   header: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingTop: 50,
     paddingBottom: 20,
     paddingHorizontal: 20,
@@ -602,7 +605,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 15,
   },
   optionsContainer: {
@@ -616,17 +619,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
     alignItems: 'center',
   },
   optionButtonActive: {
-    backgroundColor: '#079b59',
-    borderColor: '#079b59',
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
   },
   optionText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#333333',
+    color: colors.text,
     textAlign: 'center',
   },
   optionTextActive: {
@@ -645,7 +648,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 8,
   },
   input: {
@@ -655,17 +658,17 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: colors.divider,
   },
   inputError: {
-    borderColor: '#dc3545',
+    borderColor: colors.error,
   },
   textArea: {
     height: 80,
     textAlignVertical: 'top',
   },
   errorText: {
-    color: '#dc3545',
+    color: colors.error,
     fontSize: 14,
     marginTop: 5,
   },
@@ -675,7 +678,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#ecf0f1',
+    borderBottomColor: colors.hoverBg,
   },
   itemInfo: {
     flex: 1,
@@ -684,12 +687,12 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#333333',
+    color: colors.text,
     marginBottom: 4,
   },
   itemOption: {
     fontSize: 12,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginBottom: 2,
   },
   itemPricing: {
@@ -697,13 +700,13 @@ const styles = StyleSheet.create({
   },
   itemQuantity: {
     fontSize: 14,
-    color: '#6c757d',
+    color: colors.textMuted,
     marginBottom: 2,
   },
   itemPrice: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#079b59',
+    color: colors.accent,
   },
   summarySection: {
     backgroundColor: '#FFFFFF',
@@ -718,45 +721,45 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 16,
-    color: '#333333',
+    color: colors.text,
   },
   summaryValue: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#333333',
+    color: colors.text,
   },
   summaryDivider: {
     height: 1,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: colors.divider,
     marginVertical: 10,
   },
   totalLabel: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333333',
+    color: colors.text,
   },
   totalValue: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#079b59',
+    color: colors.accent,
   },
   bottomSection: {
     padding: 20,
     paddingBottom: 40,
   },
   orderButton: {
-    backgroundColor: '#079b59',
+    backgroundColor: colors.accent,
     paddingVertical: 16,
     borderRadius: 20,
     alignItems: 'center',
     elevation: 2,
-    shadowColor: '#079b59',
+    shadowColor: colors.accent,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
   orderButtonDisabled: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: colors.divider,
     elevation: 0,
     shadowOpacity: 0,
   },
