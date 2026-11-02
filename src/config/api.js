@@ -66,6 +66,10 @@ export const API_ENDPOINTS = {
     CATEGORY_DETAIL: (slug) => `/categories/${slug}/`,
     PRODUCTS: '/products/',
     PRODUCT_DETAIL: (slug) => `/products/${slug}/`,
+    // v1.1 (вечер 02.11.2026): друг задеплоил выбор новинок и блюдо недели
+    // на сервере; branch_id обязателен, как во всём каталоге
+    FEATURED: '/products/featured/',
+    WEEKLY_SPECIAL: '/products/weekly-special/',
   },
 
   // Cart

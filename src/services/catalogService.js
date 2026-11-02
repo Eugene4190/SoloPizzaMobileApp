@@ -310,10 +310,42 @@ class CatalogService {
   }
 
   async getFeaturedProducts(options) {
+    // v1.1 (вечер 02.11.2026): новинки выбирает СЕРВЕР (/products/featured/).
+    // Если эндпоинт недоступен (старый деплой, offline) — прежняя локальная
+    // выборка: акции is_weekly_special, иначе весь список.
+    const branchId = await this.ensureBranchId({ force: options?.force });
+    try {
+      const featured = await this._cached(
+        `featured:${branchId}`,
+        () => this._request(API_ENDPOINTS.CATALOG.FEATURED, { branch_id: branchId }),
+        options,
+      );
+      const items = Array.isArray(featured) ? featured : [];
+      if (items.length > 0) return items.map(uiProduct);
+    } catch (error) {
+      // сервер без featured: уходим в локальную выборку ниже
+    }
     const products = await this.getProducts({ force: options?.force });
     const weekly = products.filter((p) => p.is_weekly_special);
-    const pool = weekly.length > 0 ? weekly : products;
-    return pool;
+    return weekly.length > 0 ? weekly : products;
+  }
+
+  /**
+   * «Пицца недели» (v1.1): ВСЕГДА один объект — полная карточка с variants.
+   * null — когда акции нет или эндпоинт недоступен: блок просто скрывается.
+   */
+  async getWeeklySpecial(options) {
+    const branchId = await this.ensureBranchId({ force: options?.force });
+    try {
+      const detail = await this._cached(
+        `weekly:${branchId}`,
+        () => this._request(API_ENDPOINTS.CATALOG.WEEKLY_SPECIAL, { branch_id: branchId }),
+        options,
+      );
+      return detail && typeof detail === 'object' ? uiProduct(detail) : null;
+    } catch (error) {
+      return null;
+    }
   }
 
   async searchProducts(query, filters = {}) {
