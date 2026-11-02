@@ -296,14 +296,14 @@ const CartScreen = ({ navigation }) => {
     <View style={styles.emptyContainer}>
       <Text style={styles.emptyIcon}>🛒</Text>
       <Text style={styles.emptyTitle}>Корзина пуста</Text>
-      <Text style={styles.emptyText}>
+      <Text style={styles.emptySubtitle}>
         Добавьте товары из каталога, чтобы оформить заказ
       </Text>
       <TouchableOpacity
-        style={styles.shopButton}
+        style={styles.continueButton}
         onPress={() => navigation.navigate('Catalog')}
       >
-        <Text style={styles.shopButtonText}>Перейти к покупкам</Text>
+        <Text style={styles.continueButtonText}>Перейти к покупкам</Text>
       </TouchableOpacity>
     </View>
   );
@@ -523,6 +523,12 @@ const makeStyles = (colors) => StyleSheet.create({
     color: colors.buttonText,
     fontSize: 20,
     fontWeight: '700',
+  },
+  quantityButtonDisabled: {
+    opacity: 0.5,
+  },
+  removeButtonDisabled: {
+    opacity: 0.5,
   },
   summaryContainer: {
     backgroundColor: colors.cardBg,

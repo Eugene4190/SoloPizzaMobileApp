@@ -380,6 +380,13 @@ const makeStyles = (colors) => StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  registerLink: {
+    color: colors.accent,
+    fontWeight: '700',
+  },
+  disabledText: {
+    opacity: 0.6,
+  },
   guestSection: {
     alignItems: 'center',
   },
