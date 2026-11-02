@@ -16,6 +16,7 @@ import { fetchFeaturedProducts, fetchCategories } from '../store/slices/productS
 import { addToCart } from '../store/slices/cartSlice';
 import { catalogService, productService, promoService } from '../services';
 import DemoBanner from '../components/ui/DemoBanner';
+import WeeklySpecialBanner from '../components/WeeklySpecialBanner';
 import useAppTheme from '../theme/useAppTheme';
 import { num } from '../utils/money';
 
@@ -32,6 +33,7 @@ const HomeScreen = ({ navigation }) => {
   const [bannerIndex, setBannerIndex] = useState(0);
   const [apiCategories, setApiCategories] = useState([]);
   const [apiProducts, setApiProducts] = useState([]);
+  const [weekly, setWeekly] = useState(null);
   const [banners, setBanners] = useState([
     {
       id: 1,
@@ -62,11 +64,14 @@ const HomeScreen = ({ navigation }) => {
 
   const loadApiData = async (force = false) => {
     try {
-      const [categoriesData, productsData, promosData] = await Promise.all([
+      const [categoriesData, productsData, promosData, weeklyData] = await Promise.all([
         catalogService.getCategories({ force }),
         productService.getPopularProducts({ limit: 6, force }),
         promoService.getActivePromos(),
+        // v1.1: блюдо недели — один объект или null (блока просто нет)
+        catalogService.getWeeklySpecial({ force }),
       ]);
+      setWeekly(weeklyData || null);
       
       setApiCategories(categoriesData.results || categoriesData || []);
       setApiProducts(productsData.results || productsData || []);
@@ -221,6 +226,15 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
 
+      {/* Пицца недели (v1.1): блок из макетов design/weekly-special-*.png */}
+      {weekly ? (
+        <WeeklySpecialBanner
+          product={weekly}
+          onAdd={() => handleAddToCart(weekly)}
+          onPress={() => navigation.navigate('ProductDetail', { productId: weekly.id })}
+        />
+      ) : null}
+
       {/* Categories Section */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
@@ -247,7 +261,7 @@ const HomeScreen = ({ navigation }) => {
       {/* Featured Products Section */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Рекомендуемые</Text>
+          <Text style={styles.sectionTitle}>Новинки</Text>
           <TouchableOpacity onPress={navigateToAllProducts}>
             <Text style={styles.seeAllText}>Все</Text>
           </TouchableOpacity>

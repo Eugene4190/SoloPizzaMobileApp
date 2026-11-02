@@ -151,6 +151,12 @@ const ProfileScreen = ({ navigation }) => {
 
   const menuItems = [
     {
+      // v1.1: вакансии задеплоены другом — пункт живой, не «в разработке»
+      title: 'Вакансии',
+      icon: '💼',
+      onPress: () => navigation.navigate('Vacancies'),
+    },
+    {
       title: 'История заказов',
       icon: '📋',
       onPress: () => navigation.navigate('OrderHistory'),

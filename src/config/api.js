@@ -118,6 +118,13 @@ export const API_ENDPOINTS = {
     PAYMENT: '/orders/payment/',
   },
 
+  // v1.1 (вечер 02.11.2026): вакансии и отклики, филиалонезависимы
+  VACANCIES: {
+    LIST: '/vacancies/',
+    DETAIL: (id) => `/vacancies/${id}/`,
+    APPLY: (id) => `/vacancies/${id}/applications/`,
+  },
+
   // ↓ ДОБАВЛЕНО ПРИ АУДИТЕ: нужны promoService и userService
   PROMO: {
     // путь согласован со спекой app_api v2; запрос уходит только при PROMOS_ENABLED

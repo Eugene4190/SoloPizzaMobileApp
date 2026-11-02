@@ -31,6 +31,9 @@ import RegisterScreen from '../screens/RegisterScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import OrderHistoryScreen from '../screens/OrderHistoryScreen';
 import OrderDetailScreen from '../screens/OrderDetailScreen';
+import VacancyListScreen from '../screens/VacancyListScreen';
+import VacancyDetailScreen from '../screens/VacancyDetailScreen';
+import VacancyApplyScreen from '../screens/VacancyApplyScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -165,6 +168,21 @@ export default function AppNavigator() {
           name="OrderDetail" 
           component={OrderDetailScreen} 
           options={{ title: 'Детали заказа' }}
+        />
+        <Stack.Screen 
+          name="Vacancies" 
+          component={VacancyListScreen} 
+          options={{ title: 'Вакансии' }}
+        />
+        <Stack.Screen 
+          name="VacancyDetail" 
+          component={VacancyDetailScreen} 
+          options={{ title: 'Вакансия' }}
+        />
+        <Stack.Screen 
+          name="VacancyApply" 
+          component={VacancyApplyScreen} 
+          options={{ title: 'Отклик на вакансию' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
