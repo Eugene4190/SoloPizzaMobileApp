@@ -71,10 +71,13 @@ class CatalogService {
     try {
       // 5 секунд вместо общих 10: демо-режим включается быстрее,
       // silent: пока API не задеплоен, ожидаемые сбои не светят красными тостами
-      return await apiService.get(path, params, {
+      const response = await apiService.get(path, params, {
         timeout: 5000,
         silent: USE_DEMO_FALLBACK,
       });
+      // успех сбрасывает демо-флаг: плашка исчезает без перезапуска
+      this._demo = false;
+      return response;
     } catch (error) {
       if (!USE_DEMO_FALLBACK) throw error;
       this._demo = true;

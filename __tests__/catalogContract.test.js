@@ -14,7 +14,12 @@ jest.mock('../src/services/apiService', () => ({
 
 import apiService from '../src/services/apiService';
 import catalogService from '../src/services/catalogService';
+import { API_BASE_URL } from '../src/config/api';
 import { light, dark } from '../src/theme/colors';
+
+test('база API всегда боевая: 10.0.2.2 — адрес эмулятора, на живом телефоне его нет', () => {
+  expect(API_BASE_URL).toBe('https://solo-pizza.by/api/v1');
+});
 
 beforeEach(() => {
   apiService.get.mockReset();
