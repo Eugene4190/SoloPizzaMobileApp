@@ -32,6 +32,14 @@ export const USE_DEMO_FALLBACK = true;
 // После деплоя другом /promos/active/ — поставить true.
 export const PROMOS_ENABLED = false;
 
+// ПРОФИЛЬ / АДРЕСА / СТАТИСТИКА. На 02.11.2026 в app_api НЕТ эндпоинтов
+// пользователя: /user/stats/ отвечал 404 с красным console.error на каждом
+// открытии Профиля (дефект №14, пойман владельцем на веб-превью). Спека v2
+// предлагает /users/me/; статистику и адреса друг ещё не описал.
+// Пока USER_API_ENABLED = false, userService не делает эти запросы вовсе;
+// гостю они бессмысленны даже после деплоя (нужен вход).
+export const USER_API_ENABLED = false;
+
 // API Endpoints
 export const API_ENDPOINTS = {
   // Authentication

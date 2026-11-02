@@ -10,13 +10,14 @@
 
 jest.mock('../src/services/apiService', () => ({
   __esModule: true,
-  default: { get: jest.fn() },
+  default: { get: jest.fn(), getAuthToken: jest.fn() },
 }));
 
 import apiService from '../src/services/apiService';
 import catalogService from '../src/services/catalogService';
 import promoService from '../src/services/promoService';
-import { PROMOS_ENABLED } from '../src/config/api';
+import userService from '../src/services/userService';
+import { PROMOS_ENABLED, USER_API_ENABLED } from '../src/config/api';
 
 const META = { currency: 'BYN', timezone: 'Europe/Minsk', default_branch_id: 1, languages: ['ru', 'en'] };
 const CATEGORIES = [{ id: 1, slug: 'picca', name: 'Пиццы', product_count: 2 }];
@@ -36,6 +37,8 @@ beforeEach(() => {
     if (path === '/products/') return Promise.resolve(PRODUCTS);
     return Promise.reject(new Error('HTTP 404'));
   });
+  apiService.getAuthToken.mockReset();
+  apiService.getAuthToken.mockResolvedValue(null);
   catalogService.setBranchId(null);
   catalogService.invalidate();
 });
@@ -100,6 +103,24 @@ describe('дефект №3: промо не стучится в несущес�
     expect(PROMOS_ENABLED).toBe(false);
     const promos = await promoService.getActivePromos();
     expect(promos).toEqual([]);
+    expect(apiService.get).not.toHaveBeenCalled();
+  });
+});
+
+describe('дефект №14: профиль гостя не стучится в /user/stats/', () => {
+  test('USER_API_ENABLED=false и нет токена → запросов нет, экран получает нули', async () => {
+    expect(USER_API_ENABLED).toBe(false);
+    const stats = await userService.getStats();
+    expect(stats).toEqual({ orders_count: 0, total_spent: 0, bonus_points: 0 });
+    const addresses = await userService.getAddresses();
+    expect(addresses).toEqual([]);
+    expect(apiService.get).not.toHaveBeenCalled();
+  });
+
+  test('флаг выключен даже при наличии токена → запросов нет', async () => {
+    apiService.getAuthToken.mockResolvedValue('access-token');
+    await userService.getStats();
+    await userService.getAddresses();
     expect(apiService.get).not.toHaveBeenCalled();
   });
 });
