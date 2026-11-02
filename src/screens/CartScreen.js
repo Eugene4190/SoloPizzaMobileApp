@@ -8,6 +8,7 @@ import {
   RefreshControl,
   ActivityIndicator,
   TextInput,
+  Platform,
 } from 'react-native';
 import Alert from '../utils/alertShim';
 import useAppTheme from '../theme/useAppTheme';
@@ -391,12 +392,11 @@ const makeStyles = (colors) => StyleSheet.create({
   },
   header: {
     backgroundColor: colors.accent,
-    paddingTop: 50,
-    paddingBottom: 24,
-    paddingHorizontal: 24,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    paddingTop: Platform.OS === 'web' ? 12 : 50,
+    paddingBottom: 12,
+    paddingHorizontal: 16,
     alignItems: 'center',
+    justifyContent: 'center',
     shadowColor: colors.text,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -404,13 +404,19 @@ const makeStyles = (colors) => StyleSheet.create({
     elevation: 4,
   },
   title: {
-    fontSize: 28,
+    fontSize: 22,
     fontWeight: '700',
     color: colors.buttonText,
+    textAlign: 'center',
   },
   clearButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    position: 'absolute',
+    right: 16,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
     borderRadius: 8,
     borderWidth: 2,
     bordercolor: colors.buttonText,

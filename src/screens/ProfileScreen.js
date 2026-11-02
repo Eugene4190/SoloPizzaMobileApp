@@ -8,6 +8,7 @@ import {
   TextInput,
   ActivityIndicator,
   RefreshControl,
+  Platform,
 } from 'react-native';
 import Alert from '../utils/alertShim';
 import useAppTheme from '../theme/useAppTheme';
@@ -442,19 +443,24 @@ const makeStyles = (colors) => StyleSheet.create({
   },
   header: {
     backgroundColor: colors.accent,
-    paddingTop: 50,
-    paddingBottom: 20,
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    paddingTop: Platform.OS === 'web' ? 12 : 50,
+    paddingBottom: 12,
+    paddingHorizontal: 16,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     color: colors.buttonText,
+    textAlign: 'center',
   },
   editButton: {
+    position: 'absolute',
+    right: 12,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
     padding: 8,
   },
   editButtonText: {

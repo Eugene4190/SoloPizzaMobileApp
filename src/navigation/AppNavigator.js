@@ -3,7 +3,7 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSelector } from 'react-redux';
-import { Text, View, StyleSheet, useColorScheme } from 'react-native';
+import { Text, View, StyleSheet, useColorScheme, Platform } from 'react-native';
 import { light, dark } from '../theme/colors';
 
 // Тема навигации = палитра сайта (src/theme/colors.js): заголовки, таб-бар, фон.
@@ -125,8 +125,10 @@ export default function AppNavigator() {
     <NavigationContainer theme={navTheme}>
       <Stack.Navigator
         screenOptions={{
+          headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: '#079b59',
+            ...(Platform.OS === 'web' ? { height: 56 } : {}),
           },
           headerTintColor: '#FFFFFF',
           headerTitleStyle: {

@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   RefreshControl,
   Dimensions,
+  Platform,
 } from 'react-native';
 import ProductImage, { CATEGORY_GLYPHS } from '../components/ui/ProductImage';
 import { useDispatch, useSelector } from 'react-redux';
@@ -361,22 +362,22 @@ const makeStyles = (colors) => StyleSheet.create({
     color: colors.textMuted,
   },
   header: {
-    paddingHorizontal: 20,
-    paddingTop: 50,
-    paddingBottom: 20,
+    paddingHorizontal: 16,
+    paddingTop: Platform.OS === 'web' ? 12 : 50,
+    paddingBottom: 12,
     backgroundColor: colors.accent,
   },
   headerTitle: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     color: colors.buttonText,
     textAlign: 'center',
   },
   headerSubtitle: {
-    fontSize: 16,
+    fontSize: 13,
     color: colors.buttonText,
     textAlign: 'center',
-    marginTop: 5,
+    marginTop: 2,
     opacity: 0.9,
   },
   bannerContainer: {
