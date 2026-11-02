@@ -8,6 +8,7 @@ import {
   TextInput,
   ActivityIndicator,
   RefreshControl,
+  Platform,
 } from 'react-native';
 import Alert from '../utils/alertShim';
 import ProductImage from '../components/ui/ProductImage';
@@ -235,6 +236,13 @@ const CatalogScreen = ({ navigation }) => {
         data={filteredProducts}
         renderItem={renderProduct}
         keyExtractor={(item) => item.id.toString()}
+        // 02.11.2026: тяжёлые медиа сайта (png 200–400 kB) — держим окно
+        // виртуализации узким, чтобы офскрин-карточки не тянули картинки
+        // сразу; на веб ленивость даёт loading="lazy" в ProductImage
+        windowSize={9}
+        initialNumToRender={6}
+        maxToRenderPerBatch={6}
+        removeClippedSubviews={Platform.OS !== 'web'}
         numColumns={2}
         contentContainerStyle={styles.productsList}
         refreshControl={

@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { Platform, View, Text, Image } from 'react-native';
 import useAppTheme from '../../theme/useAppTheme';
 
 export const CATEGORY_GLYPHS = {
@@ -28,7 +28,14 @@ export default function ProductImage({ uri, glyph, style, emojiSize = 40 }) {
   const { colors } = useAppTheme();
 
   if (uri) {
-    return <Image source={{ uri }} style={style} resizeMode="cover" />;
+    // 02.11.2026: каталог тянул 22 MB картинок разом (92 запроса, 34 c до
+    // полной отрисовки на веб-превью). На веб отдаём браузеру loading="lazy"
+    // и decoding="async": картинки вне экрана не грузятся и не декабятся,
+    // лента начинает отвечать сразу. На native атрибуты игнорируются,
+    // там ленивость даёт виртуализация FlatList (см. CatalogScreen).
+    const webLazy =
+      Platform.OS === 'web' ? { loading: 'lazy', decoding: 'async' } : {};
+    return <Image source={{ uri }} style={style} resizeMode="cover" {...webLazy} />;
   }
 
   return (
