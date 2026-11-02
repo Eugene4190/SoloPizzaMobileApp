@@ -41,7 +41,7 @@ class PromoService {
     try {
       // silent: эндпоинта promo/active на сервере друга ещё нет — 404 ожидаем,
       // красный console.error на каждом открытии Home не нужен
-      const response = await apiService.get(API_ENDPOINTS.PROMO.ACTIVE, { silent: true });
+      const response = await apiService.get(API_ENDPOINTS.PROMO.ACTIVE, {}, { silent: true });
       return toArray(response);
     } catch (error) {
       // Эндпоинта может не быть — это не ошибка приложения, а отсутствие данных.

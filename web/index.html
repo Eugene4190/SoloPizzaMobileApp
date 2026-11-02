@@ -8,6 +8,11 @@
     <style>
       html, body, #root { height: 100%; margin: 0; }
       body { background: #f8f9fa; font-family: -apple-system, Roboto, sans-serif; }
+      /* 04.11.2026: КЛЮЧЕВАЯ СТРОКА веб-превью. В React Native корневой View
+         растягивается на экран сам, а в браузере #root — обычный block-div:
+         дочерний View c flex:1 сворачивался в высоту 0 и страница была пустой
+         (DOM при этом полный). Flex-контейнер из #root чинит всю цепочку. */
+      #root { display: flex; flex-direction: column; }
     </style>
   </head>
   <body>
