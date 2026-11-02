@@ -8,8 +8,8 @@ import {
   TextInput,
   ActivityIndicator,
   RefreshControl,
-  Alert,
 } from 'react-native';
+import { alert as Alert } from '../utils/alertShim';
 import ProductImage from '../components/ui/ProductImage';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, fetchCategories } from '../store/slices/productSlice';
@@ -209,9 +209,10 @@ const CatalogScreen = ({ navigation }) => {
         <TextInput
           style={styles.searchInput}
           placeholder="Поиск товаров..."
+          placeholderTextColor={colors.textMuted}
           value={searchQuery}
           onChangeText={setSearchQuery}
-          placeholderTextColor="#6c757d"
+          placeholderTextColor={colors.textMuted}
         />
       </View>
 
@@ -306,6 +307,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderBottomColor: colors.divider,
   },
   searchInput: {
+    color: colors.text,
     backgroundColor: colors.bg,
     borderRadius: 10,
     paddingHorizontal: 15,

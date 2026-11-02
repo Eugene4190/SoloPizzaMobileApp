@@ -6,11 +6,11 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
-  Alert,
   FlatList,
   RefreshControl,
   Linking,
 } from 'react-native';
+import { alert as Alert } from '../utils/alertShim';
 import useAppTheme from '../theme/useAppTheme';
 import { num } from '../utils/money';
 import { useDispatch, useSelector } from 'react-redux';

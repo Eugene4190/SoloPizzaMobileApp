@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
-  Alert,
   FlatList,
 } from 'react-native';
+import { alert as Alert } from '../utils/alertShim';
 import useAppTheme from '../theme/useAppTheme';
 import { num } from '../utils/money';
 import { useDispatch, useSelector } from 'react-redux';
@@ -363,6 +363,7 @@ const CheckoutScreen = ({ navigation }) => {
                 errors.street && styles.inputError,
               ]}
               placeholder="Название улицы"
+              placeholderTextColor={colors.textMuted}
               value={deliveryAddress.street}
               onChangeText={(value) => handleInputChange('address', 'street', value)}
             />
@@ -379,6 +380,7 @@ const CheckoutScreen = ({ navigation }) => {
                   errors.house && styles.inputError,
                 ]}
                 placeholder="№"
+                placeholderTextColor={colors.textMuted}
                 value={deliveryAddress.house}
                 onChangeText={(value) => handleInputChange('address', 'house', value)}
               />
@@ -391,6 +393,7 @@ const CheckoutScreen = ({ navigation }) => {
               <TextInput
                 style={styles.input}
                 placeholder="№"
+                placeholderTextColor={colors.textMuted}
                 value={deliveryAddress.apartment}
                 onChangeText={(value) => handleInputChange('address', 'apartment', value)}
               />
@@ -402,6 +405,7 @@ const CheckoutScreen = ({ navigation }) => {
               <TextInput
                 style={styles.input}
                 placeholder="№"
+                placeholderTextColor={colors.textMuted}
                 value={deliveryAddress.entrance}
                 onChangeText={(value) => handleInputChange('address', 'entrance', value)}
               />
@@ -411,6 +415,7 @@ const CheckoutScreen = ({ navigation }) => {
               <TextInput
                 style={styles.input}
                 placeholder="№"
+                placeholderTextColor={colors.textMuted}
                 value={deliveryAddress.floor}
                 onChangeText={(value) => handleInputChange('address', 'floor', value)}
               />
@@ -421,6 +426,7 @@ const CheckoutScreen = ({ navigation }) => {
             <TextInput
               style={[styles.input, styles.textArea]}
               placeholder="Дополнительная информация для курьера"
+              placeholderTextColor={colors.textMuted}
               value={deliveryAddress.comment}
               onChangeText={(value) => handleInputChange('address', 'comment', value)}
               multiline
@@ -441,6 +447,7 @@ const CheckoutScreen = ({ navigation }) => {
               errors.name && styles.inputError,
             ]}
             placeholder="Ваше имя"
+            placeholderTextColor={colors.textMuted}
             value={contactInfo.name}
             onChangeText={(value) => handleInputChange('contact', 'name', value)}
           />
@@ -456,6 +463,7 @@ const CheckoutScreen = ({ navigation }) => {
               errors.phone && styles.inputError,
             ]}
             placeholder="+375 (XX) XXX-XX-XX"
+            placeholderTextColor={colors.textMuted}
             value={contactInfo.phone}
             onChangeText={(value) => handleInputChange('contact', 'phone', value)}
             keyboardType="phone-pad"
@@ -469,6 +477,7 @@ const CheckoutScreen = ({ navigation }) => {
           <TextInput
             style={styles.input}
             placeholder="your@email.com"
+            placeholderTextColor={colors.textMuted}
             value={contactInfo.email}
             onChangeText={(value) => handleInputChange('contact', 'email', value)}
             keyboardType="email-address"
@@ -522,6 +531,7 @@ const CheckoutScreen = ({ navigation }) => {
         <TextInput
           style={[styles.input, styles.textArea]}
           placeholder="Дополнительные пожелания к заказу"
+          placeholderTextColor={colors.textMuted}
           value={orderComment}
           onChangeText={setOrderComment}
           multiline
@@ -654,6 +664,7 @@ const makeStyles = (colors) => StyleSheet.create({
     marginBottom: 8,
   },
   input: {
+    color: colors.text,
     backgroundColor: colors.bg,
     borderRadius: 8,
     paddingHorizontal: 12,

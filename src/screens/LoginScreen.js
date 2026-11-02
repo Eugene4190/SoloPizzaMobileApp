@@ -5,13 +5,13 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import { alert as Alert } from '../utils/alertShim';
 import useAppTheme from '../theme/useAppTheme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 // ИСПРАВЛЕНО ПРИ АУДИТЕ: прямой импорт react-native-vector-icons в v10.x
@@ -151,6 +151,7 @@ const LoginScreen = ({ navigation }) => {
             <TextInput
               style={[styles.input, errors.email && styles.inputError]}
               placeholder="Email"
+              placeholderTextColor={colors.textMuted}
               value={email}
               onChangeText={(text) => {
                 setEmail(text);
@@ -175,6 +176,7 @@ const LoginScreen = ({ navigation }) => {
               <TextInput
                 style={styles.passwordInput}
                 placeholder="Пароль"
+                placeholderTextColor={colors.textMuted}
                 value={password}
                 onChangeText={(text) => {
                   setPassword(text);
@@ -295,6 +297,7 @@ const makeStyles = (colors) => StyleSheet.create({
     marginBottom: 8,
   },
   input: {
+    color: colors.text,
     backgroundColor: colors.cardBg,
     borderRadius: 20,
     paddingHorizontal: 16,
@@ -315,6 +318,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderColor: colors.divider,
   },
   passwordInput: {
+    color: colors.text,
     flex: 1,
     paddingHorizontal: 16,
     paddingVertical: 14,

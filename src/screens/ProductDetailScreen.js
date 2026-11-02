@@ -6,9 +6,9 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
-  Alert,
   Dimensions,
 } from 'react-native';
+import { alert as Alert } from '../utils/alertShim';
 import ProductImage from '../components/ui/ProductImage';
 import useAppTheme from '../theme/useAppTheme';
 import { num } from '../utils/money';

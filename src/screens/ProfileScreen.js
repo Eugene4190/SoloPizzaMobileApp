@@ -6,10 +6,10 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
-  Alert,
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
+import { alert as Alert } from '../utils/alertShim';
 import useAppTheme from '../theme/useAppTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, updateProfile } from '../store/slices/authSlice';
@@ -272,6 +272,7 @@ const ProfileScreen = ({ navigation }) => {
                   errors.first_name && styles.inputError,
                 ]}
                 placeholder="Ваше имя"
+                placeholderTextColor={colors.textMuted}
                 value={formData.first_name}
                 onChangeText={(value) => handleInputChange('first_name', value)}
               />
@@ -288,6 +289,7 @@ const ProfileScreen = ({ navigation }) => {
                   errors.last_name && styles.inputError,
                 ]}
                 placeholder="Ваша фамилия"
+                placeholderTextColor={colors.textMuted}
                 value={formData.last_name}
                 onChangeText={(value) => handleInputChange('last_name', value)}
               />
@@ -304,6 +306,7 @@ const ProfileScreen = ({ navigation }) => {
                   errors.phone && styles.inputError,
                 ]}
                 placeholder="+375 (XX) XXX-XX-XX"
+                placeholderTextColor={colors.textMuted}
                 value={formData.phone}
                 onChangeText={(value) => handleInputChange('phone', value)}
                 keyboardType="phone-pad"
@@ -321,6 +324,7 @@ const ProfileScreen = ({ navigation }) => {
                   errors.email && styles.inputError,
                 ]}
                 placeholder="your@email.com"
+                placeholderTextColor={colors.textMuted}
                 value={formData.email}
                 onChangeText={(value) => handleInputChange('email', value)}
                 keyboardType="email-address"
@@ -511,6 +515,7 @@ const makeStyles = (colors) => StyleSheet.create({
     marginBottom: 8,
   },
   input: {
+    color: colors.text,
     backgroundColor: colors.bg,
     borderRadius: 8,
     paddingHorizontal: 12,

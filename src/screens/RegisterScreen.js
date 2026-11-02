@@ -6,11 +6,11 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
 } from 'react-native';
+import { alert as Alert } from '../utils/alertShim';
 import useAppTheme from '../theme/useAppTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, clearError } from '../store/slices/authSlice';
@@ -215,6 +215,7 @@ const RegisterScreen = ({ navigation }) => {
                 errors.firstName && styles.inputError,
               ]}
               placeholder="Введите ваше имя"
+              placeholderTextColor={colors.textMuted}
               value={formData.firstName}
               onChangeText={(value) => handleInputChange('firstName', value)}
               autoCapitalize="words"
@@ -234,6 +235,7 @@ const RegisterScreen = ({ navigation }) => {
                 errors.lastName && styles.inputError,
               ]}
               placeholder="Введите вашу фамилию"
+              placeholderTextColor={colors.textMuted}
               value={formData.lastName}
               onChangeText={(value) => handleInputChange('lastName', value)}
               autoCapitalize="words"
@@ -253,6 +255,7 @@ const RegisterScreen = ({ navigation }) => {
                 errors.email && styles.inputError,
               ]}
               placeholder="Введите ваш email"
+              placeholderTextColor={colors.textMuted}
               value={formData.email}
               onChangeText={(value) => handleInputChange('email', value)}
               keyboardType="email-address"
@@ -274,6 +277,7 @@ const RegisterScreen = ({ navigation }) => {
                 errors.phone && styles.inputError,
               ]}
               placeholder="+375 (XX) XXX-XX-XX"
+              placeholderTextColor={colors.textMuted}
               value={formData.phone}
               onChangeText={(value) => handleInputChange('phone', value)}
               keyboardType="phone-pad"
@@ -294,6 +298,7 @@ const RegisterScreen = ({ navigation }) => {
                   errors.password && styles.inputError,
                 ]}
                 placeholder="Введите пароль"
+                placeholderTextColor={colors.textMuted}
                 value={formData.password}
                 onChangeText={(value) => handleInputChange('password', value)}
                 secureTextEntry={!showPassword}
@@ -325,6 +330,7 @@ const RegisterScreen = ({ navigation }) => {
                   errors.confirmPassword && styles.inputError,
                 ]}
                 placeholder="Повторите пароль"
+                placeholderTextColor={colors.textMuted}
                 value={formData.confirmPassword}
                 onChangeText={(value) => handleInputChange('confirmPassword', value)}
                 secureTextEntry={!showConfirmPassword}
@@ -454,6 +460,7 @@ const makeStyles = (colors) => StyleSheet.create({
     marginBottom: 8,
   },
   input: {
+    color: colors.text,
     backgroundColor: colors.cardBg,
     borderRadius: 20,
     paddingHorizontal: 16,
@@ -475,6 +482,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderColor: colors.divider,
   },
   passwordInput: {
+    color: colors.text,
     flex: 1,
     paddingHorizontal: 16,
     paddingVertical: 14,
