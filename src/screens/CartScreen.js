@@ -16,7 +16,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 // ИСПРАВЛЕНО ПРИ АУДИТЕ: прямой импорт react-native-vector-icons в v10.x
 // не тянет шрифт — иконки рендерились пустыми квадратами.
 import Icon from '../components/ui/Icon';
-import { cartService } from '../services';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   updateCartItemQuantity,
@@ -35,7 +34,7 @@ const CartScreen = ({ navigation }) => {
   const [promoCode, setPromoCode] = useState('');
   const [promoApplied, setPromoApplied] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [cartItems, setCartItems] = useState([]);
+  const cartItems = items; // единственный источник — redux cartSlice (persist в AsyncStorage)
   const [cartSummary, setCartSummary] = useState({ total: 0, discount: 0, delivery: 0 });
   const [updating, setUpdating] = useState(false);
 
@@ -44,24 +43,9 @@ const CartScreen = ({ navigation }) => {
   }, []);
 
   const loadCart = async () => {
-    try {
-      setLoading(true);
-      const [cartData, summaryData] = await Promise.all([
-        cartService.getCart(),
-        cartService.getCartSummary(),
-      ]);
-      
-      setCartItems(cartData.items || []);
-      setCartSummary(summaryData || { total: 0, discount: 0, delivery: 0 });
-    } catch (error) {
-      console.error('Error loading cart:', error);
-      // Fallback to local cart
-      const localCart = await cartService.getLocalCart();
-      setCartItems(localCart.items || []);
-      setCartSummary({ total: localCart.total || 0, discount: 0, delivery: 0 });
-    } finally {
-      setLoading(false);
-    }
+    // Корзина локальная (redux + AsyncStorage): в app_api друга эндпоинтов
+    // корзины нет, серверные вызовы давали 404 и красные тосты LogBox.
+    setLoading(false);
   };
 
   const calculateTotal = () => {
@@ -70,8 +54,10 @@ const CartScreen = ({ navigation }) => {
     }
     
     const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const discount = promoApplied ? subtotal * 0.1 : 0;
-    const delivery = subtotal > 500 ? 0 : 150;
+    // Скидки и доставку считает сервер друга (quote_cart из plan.txt), когда
+    // появятся эндпоинты заказов. Плейсхолдеры 150/10% убраны как выдуманные.
+    const discount = 0;
+    const delivery = 0;
     const total = subtotal - discount + delivery;
     
     return {
@@ -94,16 +80,9 @@ const CartScreen = ({ navigation }) => {
     
     try {
       setUpdating(true);
-      await cartService.updateCartItem(itemId, { quantity: newQuantity });
-      await loadCart(); // Reload cart to get updated data
+      await dispatch(updateCartItemQuantity({ itemId, quantity: newQuantity })).unwrap();
     } catch (error) {
-      console.error('Error updating quantity:', error);
-      // Update locally as fallback
-      setCartItems(prevItems => 
-        prevItems.map(item => 
-          item.id === itemId ? { ...item, quantity: newQuantity } : item
-        )
-      );
+      // обновление количества — локальная операция, сюрпризов не ждём
     } finally {
       setUpdating(false);
     }
@@ -129,12 +108,9 @@ const CartScreen = ({ navigation }) => {
           onPress: async () => {
             try {
               setUpdating(true);
-              await cartService.removeFromCart(itemId);
-              await loadCart();
+              await dispatch(removeFromCart(itemId)).unwrap();
             } catch (error) {
-              console.error('Error removing item:', error);
-              // Remove locally as fallback
-              setCartItems(prevItems => prevItems.filter(item => item.id !== itemId));
+              // удаление локальное, сюрпризов не ждём
             } finally {
               setUpdating(false);
             }
@@ -219,13 +195,9 @@ const CartScreen = ({ navigation }) => {
     
     try {
       setUpdating(true);
-      await cartService.applyPromoCode(promoCode.trim());
-      setPromoApplied(true);
-      await loadCart(); // Reload to get updated totals
-      Alert.alert('Успех', 'Промокод применен!');
-    } catch (error) {
-      console.error('Error applying promo code:', error);
-      Alert.alert('Ошибка', 'Неверный промокод или промокод уже использован');
+      // Сервера промокодов в app_api пока нет: честно говорим об этом,
+      // вместо 404 и красного тоста. Подключим вместе с эндпоинтами заказов.
+      Alert.alert('Промокод', 'Сервер промокодов ещё не подключён. Скидки появятся вместе с оформлением заказа.');
     } finally {
       setUpdating(false);
     }
@@ -234,13 +206,9 @@ const CartScreen = ({ navigation }) => {
   const removePromoCode = async () => {
     try {
       setUpdating(true);
-      await cartService.removePromoCode();
       setPromoApplied(false);
       setPromoCode('');
-      await loadCart();
     } catch (error) {
-      console.error('Error removing promo code:', error);
-      // Remove locally as fallback
       setPromoApplied(false);
       setPromoCode('');
     } finally {
