@@ -15,7 +15,7 @@
  */
 
 import apiService from './apiService';
-import { API_ENDPOINTS } from '../config/api';
+import { API_ENDPOINTS, PROMOS_ENABLED } from '../config/api';
 
 /**
  * Приводит ответ бэкенда к массиву.
@@ -38,9 +38,14 @@ class PromoService {
    * @returns {Promise<Array>} никогда не бросает — возвращает [] при ошибке
    */
   async getActivePromos() {
+    // 02.11.2026, дефект №3: эндпоинта акций на бэкенде нет, запрос уходил в 404
+    // на каждом открытии Home. Пока PROMOS_ENABLED = false — не делаем запрос
+    // вовсе и честно отдаём пустой массив; баннеры остаются дефолтными.
+    if (!PROMOS_ENABLED) {
+      return [];
+    }
     try {
-      // silent: эндпоинта promo/active на сервере друга ещё нет — 404 ожидаем,
-      // красный console.error на каждом открытии Home не нужен
+      // silent: сбой промо не ошибка приложения, красный тост не нужен
       const response = await apiService.get(API_ENDPOINTS.PROMO.ACTIVE, {}, { silent: true });
       return toArray(response);
     } catch (error) {

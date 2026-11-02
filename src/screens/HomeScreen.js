@@ -60,11 +60,11 @@ const HomeScreen = ({ navigation }) => {
     loadApiData();
   }, []);
 
-  const loadApiData = async () => {
+  const loadApiData = async (force = false) => {
     try {
       const [categoriesData, productsData, promosData] = await Promise.all([
-        catalogService.getCategories(),
-        productService.getPopularProducts({ limit: 6 }),
+        catalogService.getCategories({ force }),
+        productService.getPopularProducts({ limit: 6, force }),
         promoService.getActivePromos(),
       ]);
       
@@ -95,11 +95,13 @@ const HomeScreen = ({ navigation }) => {
     return () => clearInterval(interval);
   }, [banners.length]);
 
-  const loadData = async () => {
+  // 02.11.2026: force=true только для pull-to-refresh — обычный монтаж экрана
+  // берёт тёплый кэш каталога и не дублирует запросы (дефект №2)
+  const loadData = async (force = false) => {
     try {
       await Promise.all([
-        dispatch(fetchFeaturedProducts()).unwrap(),
-        dispatch(fetchCategories()).unwrap()
+        dispatch(fetchFeaturedProducts({ force })).unwrap(),
+        dispatch(fetchCategories(force)).unwrap()
       ]);
     } catch (error) {
       console.error('Ошибка загрузки данных:', error);
@@ -108,7 +110,7 @@ const HomeScreen = ({ navigation }) => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await Promise.all([loadData(), loadApiData()]);
+    await Promise.all([loadData(true), loadApiData(true)]);
     setRefreshing(false);
   };
 

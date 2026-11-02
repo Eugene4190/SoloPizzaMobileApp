@@ -56,12 +56,13 @@ export const fetchCategories = createAsyncThunk(
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
   async (params = {}, { rejectWithValue }) => {
-    const { categoryId, search, page = 1 } = params || {};
+    const { categoryId, search, page = 1, force } = params || {};
     try {
       const payload = await catalogService.getProducts({
         category: categoryId,
         search,
         page,
+        force,
       });
 
       const products = toArray(payload);
@@ -83,9 +84,9 @@ export const fetchProducts = createAsyncThunk(
 /** Товары для главного экрана. */
 export const fetchFeaturedProducts = createAsyncThunk(
   'products/fetchFeaturedProducts',
-  async ({ limit = 6 } = {}, { rejectWithValue }) => {
+  async ({ limit = 6, force } = {}, { rejectWithValue }) => {
     try {
-      const payload = await catalogService.getPopularProducts({ limit });
+      const payload = await catalogService.getPopularProducts({ limit, force });
       return toArray(payload);
     } catch (error) {
       return rejectWithValue(error?.message || 'Не удалось загрузить рекомендуемые товары');
@@ -124,10 +125,11 @@ export const fetchProductById = createAsyncThunk(
 /** Филиалы: контракт app_api требует branch_id в каждом запросе каталога. */
 export const fetchBranches = createAsyncThunk(
   'products/fetchBranches',
-  async (_, { rejectWithValue }) => {
+  async (arg, { rejectWithValue }) => {
+    const force = arg === true || (arg && arg.force === true);
     try {
-      await catalogService.ensureBranchId();
-      return toArray(await catalogService.getBranches());
+      await catalogService.ensureBranchId({ force });
+      return toArray(await catalogService.getBranches({ force }));
     } catch (error) {
       return rejectWithValue(error?.message || 'Не удалось загрузить филиалы');
     }

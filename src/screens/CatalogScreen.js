@@ -47,7 +47,7 @@ const CatalogScreen = ({ navigation }) => {
     filterProducts();
   }, [products, selectedCategory, searchQuery]);
 
-  const loadData = async (reset = true) => {
+  const loadData = async (reset = true, force = false) => {
     try {
       if (reset) {
         setPage(1);
@@ -57,13 +57,14 @@ const CatalogScreen = ({ navigation }) => {
       }
       
       const [categoriesResponse] = await Promise.all([
-        dispatch(fetchCategories()).unwrap(),
+        dispatch(fetchCategories(force)).unwrap(),
         // список тянем сразу с серверным фильтром категории и локальным поиском;
         // контракт app_api не отдаёт поле category в товаре, поэтому клиентская
         // фильтрация по категории невозможна — только серверный параметр
         dispatch(fetchProducts({
           categoryId: selectedCategory?.id !== 'all' ? selectedCategory?.id : undefined,
           search: searchQuery || undefined,
+          force,
         })).unwrap(),
       ]);
       void categoriesResponse;
@@ -91,7 +92,8 @@ const CatalogScreen = ({ navigation }) => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await loadData(true);
+    // pull-to-refresh обходит тёплый кэш (дефект №2)
+    await loadData(true, true);
     setRefreshing(false);
   };
 

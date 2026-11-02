@@ -23,11 +23,27 @@
  * UI-совместимость: экраны исторически читают `product.price`, а контракт даёт
  * `min_price`. Нормализация в одном месте — uiProduct(): добавляет price-алиас,
  * не удаля контрактные поля. Убрать алиас можно вместе с рефакторингом экранов.
+ *
+ * 02.11.2026, дефект №2 из памяти агента: экраны монтируются повторно при
+ * навигации (Home → Catalog → Home), и каждый монтаж тянул meta/categories/
+ * products заново: 9 запросов вместо 4 на простой сценарий. Добавлены:
+ *  - in-flight дедупликация: одновременные вызовы с одним ключом разделяют ОДИН
+ *    запрос (закрывает /meta/ ×4 при параллельном бутстрапе);
+ *  - тёплый кэш на CACHE_TTL_MS для meta/branches/categories/полного списка
+ *    товаров (закрывает повторные /categories/ и /products/ при навигации);
+ *  - force=true — обход кэша для pull-to-refresh;
+ *  - демо-ответы НЕ кэшируются: как только сервер оживает, следующий запрос
+ *    обязан уйти в сеть, а не отдать прошлогоднее демо.
+ * Фильтрованные запросы (category/search) кэш не используют: список под фильтр
+ * всегда свежий.
  */
 
 import apiService from './apiService';
 import { API_ENDPOINTS, USE_DEMO_FALLBACK } from '../config/api';
 import { resolveDemo } from './demoCatalog';
+
+/** Время жизни тёплого кэша каталога: меню меняется редко, навигация — часто. */
+const CACHE_TTL_MS = 60000;
 
 function uiProduct(product) {
   if (!product || typeof product !== 'object') return product;
@@ -44,6 +60,8 @@ class CatalogService {
     this._categoriesCache = null;
     this._productsCache = null;
     this._cacheBranchId = null;
+    this._cache = new Map();
+    this._inflight = new Map();
   }
 
   /** true, если данные сейчас из демо-набора (API недоступен). */
@@ -58,9 +76,56 @@ class CatalogService {
   setBranchId(branchId) {
     if (this.branchId !== branchId) {
       this.branchId = branchId;
-      this._productsCache = null;
-      this._cacheBranchId = null;
+      // категории и товары филиалозависимы: кэш сбрасывается целиком
+      this.invalidate();
     }
+  }
+
+  /** Полный сброс тёплого кэша (смена филиала, pull-to-refresh через force). */
+  invalidate() {
+    this._cache.clear();
+    this._inflight.clear();
+    this._categoriesCache = null;
+    this._productsCache = null;
+    this._cacheBranchId = null;
+  }
+
+  _cacheRead(key) {
+    const entry = this._cache.get(key);
+    if (!entry) return undefined;
+    if (Date.now() - entry.at > CACHE_TTL_MS) {
+      this._cache.delete(key);
+      return undefined;
+    }
+    return entry.value;
+  }
+
+  /**
+   * In-flight дедупликация + тёплый кэш.
+   * @param {string} key
+   * @param {() => Promise<any>} producer
+   * @param {{force?: boolean}} [opts]
+   */
+  async _cached(key, producer, opts = {}) {
+    if (!opts.force) {
+      const hit = this._cacheRead(key);
+      if (hit !== undefined) return hit;
+      const inflight = this._inflight.get(key);
+      if (inflight) return inflight;
+    }
+    const promise = producer().then(
+      (value) => {
+        this._inflight.delete(key);
+        if (!this._demo) this._cache.set(key, { at: Date.now(), value });
+        return value;
+      },
+      (error) => {
+        this._inflight.delete(key);
+        throw error;
+      },
+    );
+    this._inflight.set(key, promise);
+    return promise;
   }
 
   /**
@@ -70,7 +135,7 @@ class CatalogService {
   async _request(path, params = {}, slugParam = null) {
     try {
       // 5 секунд вместо общих 10: демо-режим включается быстрее,
-      // silent: пока API не задеплоен, ожидаемые сбои не светят красными тостами
+      // silent: ожидаемые сбои не светят красными тостами
       const response = await apiService.get(path, params, {
         timeout: 5000,
         silent: USE_DEMO_FALLBACK,
@@ -87,25 +152,29 @@ class CatalogService {
     }
   }
 
-  async getMeta() {
-    return this._request(API_ENDPOINTS.CATALOG.META);
+  async getMeta(options) {
+    return this._cached('meta', () => this._request(API_ENDPOINTS.CATALOG.META), options);
   }
 
-  async getBranches() {
-    return this._request(API_ENDPOINTS.CATALOG.BRANCHES);
+  async getBranches(options) {
+    return this._cached('branches', () => this._request(API_ENDPOINTS.CATALOG.BRANCHES), options);
   }
 
-  /** branch_id из meta.default_branch_id; дёшево, кэшируется. */
-  async ensureBranchId() {
+  /** branch_id из meta.default_branch_id; дёшево, кэшируется и дедуплицируется. */
+  async ensureBranchId(options) {
     if (this.branchId !== null) return this.branchId;
-    const meta = await this.getMeta();
+    const meta = await this.getMeta(options);
     this.branchId = meta?.default_branch_id ?? null;
     return this.branchId;
   }
 
-  async getCategories() {
-    const branchId = await this.ensureBranchId();
-    const categories = await this._request(API_ENDPOINTS.CATALOG.CATEGORIES, { branch_id: branchId });
+  async getCategories(options) {
+    const branchId = await this.ensureBranchId(options);
+    const categories = await this._cached(
+      `categories:${branchId}`,
+      () => this._request(API_ENDPOINTS.CATALOG.CATEGORIES, { branch_id: branchId }),
+      options,
+    );
     this._categoriesCache = Array.isArray(categories) ? categories : [];
     return this._categoriesCache;
   }
@@ -125,26 +194,36 @@ class CatalogService {
 
   /** category в фильтрах принимается и как slug, и как id (экраны шлют id). */
   async getProducts(filters = {}) {
-    const branchId = await this.ensureBranchId();
+    const { category, search, force } = filters || {};
+    const branchId = await this.ensureBranchId({ force });
     const params = { branch_id: branchId };
 
-    const { category, search } = filters || {};
-    if (category !== undefined && category !== null && category !== '') {
+    const hasCategory = category !== undefined && category !== null && category !== '';
+    const hasSearch = search !== undefined && search !== null && search !== '';
+
+    if (hasCategory) {
       // id категории приходим с экрана; slug берём из кэша категорий,
       // а если кэш ещё холодный — сначала тянем категории (иначе сервер
       // получит число вместо slug и вернёт пустой список)
       if (!this._categoriesCache) {
-        await this.getCategories();
+        await this.getCategories({ force });
       }
       params.category = this._categorySlug(category);
     }
 
     // Серверного поиска нет: список тянем с серверным фильтром категории,
     // а строку поиска фильтруем локально по name/description.
-    const products = await this._request(API_ENDPOINTS.CATALOG.PRODUCTS, params);
+    const cacheable = !hasCategory && !hasSearch;
+    const products = cacheable
+      ? await this._cached(
+          `products:${branchId}`,
+          () => this._request(API_ENDPOINTS.CATALOG.PRODUCTS, params),
+          { force },
+        )
+      : await this._request(API_ENDPOINTS.CATALOG.PRODUCTS, params);
 
     let items = Array.isArray(products) ? products : [];
-    if (search !== undefined && search !== null && search !== '') {
+    if (hasSearch) {
       const q = String(search).toLowerCase();
       items = items.filter(
         (p) =>
@@ -153,8 +232,12 @@ class CatalogService {
       );
     }
 
-    this._productsCache = items;
-    this._cacheBranchId = branchId;
+    // полный список держим для маппинга id→slug в карточке товара;
+    // фильтрованные выдачи его не перетирают
+    if (cacheable) {
+      this._productsCache = items;
+      this._cacheBranchId = branchId;
+    }
     return items.map(uiProduct);
   }
 
@@ -218,16 +301,16 @@ class CatalogService {
 
   /**
    * «Популярное» для главного экрана: серверного ordering по популярности нет,
-      контракт даёт флаг акции is_weekly_special — он и есть витрина.
+   * контракт даёт флаг акции is_weekly_special — он и есть витрина.
    */
   async getPopularProducts(params = {}) {
-    const { limit = 6 } = params || {};
-    const products = await this.getFeaturedProducts();
+    const { limit = 6, force } = params || {};
+    const products = await this.getFeaturedProducts({ force });
     return products.slice(0, limit);
   }
 
-  async getFeaturedProducts() {
-    const products = await this.getProducts();
+  async getFeaturedProducts(options) {
+    const products = await this.getProducts({ force: options?.force });
     const weekly = products.filter((p) => p.is_weekly_special);
     const pool = weekly.length > 0 ? weekly : products;
     return pool;

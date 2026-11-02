@@ -15,12 +15,22 @@ import { Platform } from 'react-native';
 export const API_BASE_URL =
   Platform.OS === 'web' ? '/api/v1' : 'https://solo-pizza.by/api/v1'; // Production URL
 
-// ДЕМО-РЕЖИМ. На 01.11.2026 app_api существует ТОЛЬКО в коде сайта, на боевом
-// solo-pizza.by все /api/v1/* отвечают 404 (друг ещё не задеплоил).
-// Пока true: при сетевой ошибке/404 каталог подставляет демо-данные ТОЙ ЖЕ ФОРМЫ,
-// что и реальный API, и приложение помечает экраны баннером «демо-данные».
-// Как только друг задеплоит app_api — поставить false и удалить demoCatalog.js.
+// ДЕМО-РЕЖИМ. Актуально на 02.11.2026: app_api ЗАДЕПЛОЕН, боевой каталог живой
+// (/meta/, /branches/, /categories/, /products/ отвечают 200 — проверено живыми
+// запросами, см. state/api-status.md в репо памяти). Прежняя приписка «на боевом
+// все /api/v1/* отвечают 404» УСТАРЕЛА и убрана 02.11.2026 (дефект №4).
+// Пока true: демо-данные ТОЙ ЖЕ ФОРМЫ подставляются ТОЛЬКО когда сервер недоступен
+// или ответил 404 (страховка на offline/деградацию); успех сбрасывает флаг.
+// Когда страховка станет не нужна — поставить false и удалить demoCatalog.js.
 export const USE_DEMO_FALLBACK = true;
+
+// ПРОМО/АКЦИИ. На 02.11.2026 эндпоинта акций на бэкенде НЕТ (путь /promo/active/
+// отдавал 404). Согласованный путь будущего эндпоинта — '/promos/active/'
+// (спека app_api v2: spec-app-api-v2-orders-cart-auth.md в репо памяти).
+// Пока PROMOS_ENABLED = false, promoService НЕ делает запрос вовсе: Home
+// остаётся на дефолтных баннерах, сеть и консоль не шумят (дефект №3).
+// После деплоя другом /promos/active/ — поставить true.
+export const PROMOS_ENABLED = false;
 
 // API Endpoints
 export const API_ENDPOINTS = {
@@ -98,7 +108,8 @@ export const API_ENDPOINTS = {
 
   // ↓ ДОБАВЛЕНО ПРИ АУДИТЕ: нужны promoService и userService
   PROMO: {
-    ACTIVE: '/promo/active/',
+    // путь согласован со спекой app_api v2; запрос уходит только при PROMOS_ENABLED
+    ACTIVE: '/promos/active/',
     VALIDATE: '/promo/validate/',
   },
 
