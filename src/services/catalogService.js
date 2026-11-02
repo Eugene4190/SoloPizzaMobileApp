@@ -130,6 +130,12 @@ class CatalogService {
 
     const { category, search } = filters || {};
     if (category !== undefined && category !== null && category !== '') {
+      // id категории приходим с экрана; slug берём из кэша категорий,
+      // а если кэш ещё холодный — сначала тянем категории (иначе сервер
+      // получит число вместо slug и вернёт пустой список)
+      if (!this._categoriesCache) {
+        await this.getCategories();
+      }
       params.category = this._categorySlug(category);
     }
 

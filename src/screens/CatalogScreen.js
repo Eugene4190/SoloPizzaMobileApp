@@ -14,7 +14,6 @@ import ProductImage from '../components/ui/ProductImage';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, fetchCategories } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
-import { catalogService, productService } from '../services';
 import DemoBanner from '../components/ui/DemoBanner';
 import useAppTheme from '../theme/useAppTheme';
 
@@ -58,21 +57,18 @@ const CatalogScreen = ({ navigation }) => {
         setLoadingMore(true);
       }
       
-      const [categoriesResponse, productsResponse] = await Promise.all([
+      const [categoriesResponse] = await Promise.all([
         dispatch(fetchCategories()).unwrap(),
-        productService.getProducts({
-          page: reset ? 1 : page,
-          category: selectedCategory?.id !== 'all' ? selectedCategory?.id : undefined,
+        // список тянем сразу с серверным фильтром категории и локальным поиском;
+        // контракт app_api не отдаёт поле category в товаре, поэтому клиентская
+        // фильтрация по категории невозможна — только серверный параметр
+        dispatch(fetchProducts({
+          categoryId: selectedCategory?.id !== 'all' ? selectedCategory?.id : undefined,
           search: searchQuery || undefined,
-          ordering: sortBy === 'price_asc' ? 'price' : sortBy === 'price_desc' ? '-price' : sortBy === 'rating' ? '-rating' : 'name',
-        })
+        })).unwrap(),
       ]);
-      
-      // Update products
-      if (reset) {
-        dispatch(fetchProducts()).unwrap();
-      }
-      
+      void categoriesResponse;
+
       // Update pagination
       if (reset) {
         setPage(2);
@@ -80,11 +76,7 @@ const CatalogScreen = ({ navigation }) => {
         setPage(prev => prev + 1);
       }
       
-      setHasMore(productsResponse?.next ? true : false);
-      
-      // Также можно использовать catalogService для дополнительных данных
-      const additionalData = await catalogService.getProducts();
-      console.log('Additional catalog data:', additionalData);
+      setHasMore(false); // пагинации в app_api нет, список приходит целиком
     } catch (error) {
       console.error('Ошибка загрузки данных:', error);
     } finally {
@@ -126,12 +118,9 @@ const CatalogScreen = ({ navigation }) => {
       );
     }
 
-    // Фильтрация по категории
-    if (selectedCategory) {
-      filtered = filtered.filter(product => 
-        product.category === selectedCategory.id || product.category_id === selectedCategory.id
-      );
-    }
+    // Фильтрация по категории НЕ делается локально: контракт app_api не отдаёт
+    // поле category в списке товаров, категорию фильтрует сервер по query-параметру
+    // (getProducts({ category }) в catalogService). Локально оставляем поиск и сортировку.
 
     // Сортировка
     switch (sortBy) {
