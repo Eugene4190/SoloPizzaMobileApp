@@ -78,3 +78,34 @@ describe('native-ветка', () => {
     jest.dontMock('react-native');
   });
 });
+
+describe('форма экспорта/импорта (регессия hotfix' + 'а после 6ca3255)', () => {
+  test('default-экспорт даёт объект с .alert — именно так импортируют экраны', () => {
+    jest.resetModules();
+    jest.doMock('react-native', () => ({
+      Platform: { OS: 'android' },
+      Alert: { alert: jest.fn() },
+    }));
+    const mod = require('../src/utils/alertShim');
+    expect(typeof mod.alert).toBe('function');
+    expect(typeof mod.default.alert).toBe('function');
+    jest.dontMock('react-native');
+  });
+
+  test('ни один экран не импортирует shim именованно (это и сломало веб)', () => {
+    const fs = require('fs');
+    const path = require('path');
+    const dir = path.join(__dirname, '..', 'src', 'screens');
+    const broken = fs
+      .readdirSync(dir)
+      .filter((f) => f.endsWith('.js'))
+      .filter((f) => {
+        const src = fs.readFileSync(path.join(dir, f), 'utf-8');
+        return (
+          src.includes("{ alert as Alert }") ||
+          (src.includes('Alert.alert') && !src.includes("import Alert from '../utils/alertShim'"))
+        );
+      });
+    expect(broken).toEqual([]);
+  });
+});

@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   TextInput,
 } from 'react-native';
-import { alert as Alert } from '../utils/alertShim';
+import Alert from '../utils/alertShim';
 import useAppTheme from '../theme/useAppTheme';
 import { num } from '../utils/money';
 import ProductImage from '../components/ui/ProductImage';

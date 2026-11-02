@@ -10,7 +10,7 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
-import { alert as Alert } from '../utils/alertShim';
+import Alert from '../utils/alertShim';
 import useAppTheme from '../theme/useAppTheme';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, clearError } from '../store/slices/authSlice';
