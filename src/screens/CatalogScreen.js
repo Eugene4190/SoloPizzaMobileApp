@@ -25,7 +25,6 @@ const CatalogScreen = ({ navigation }) => {
   
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [sortBy, setSortBy] = useState('name'); // name, price_asc, price_desc
   const [refreshing, setRefreshing] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -42,11 +41,11 @@ const CatalogScreen = ({ navigation }) => {
     }, 500);
     
     return () => clearTimeout(delayedSearch);
-  }, [selectedCategory, searchQuery, sortBy]);
+  }, [selectedCategory, searchQuery]);
 
   useEffect(() => {
     filterProducts();
-  }, [products, selectedCategory, searchQuery, sortBy]);
+  }, [products, selectedCategory, searchQuery]);
 
   const loadData = async (reset = true) => {
     try {
@@ -122,39 +121,32 @@ const CatalogScreen = ({ navigation }) => {
     // поле category в списке товаров, категорию фильтрует сервер по query-параметру
     // (getProducts({ category }) в catalogService). Локально оставляем поиск и сортировку.
 
-    // Сортировка
-    switch (sortBy) {
-      case 'price_asc':
-        filtered.sort((a, b) => (a.price || a.base_price || 0) - (b.price || b.base_price || 0));
-        break;
-      case 'price_desc':
-        filtered.sort((a, b) => (b.price || b.base_price || 0) - (a.price || a.base_price || 0));
-        break;
-      case 'name':
-      default:
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-    }
+    // Сортировки нет намеренно: порядок задаёт сервер
+    // (app_api: category__order, name). Убрана по решению пользователя.
 
     setFilteredProducts(filtered);
   };
 
-  const renderCategory = ({ item }) => (
-    <TouchableOpacity
-      style={[
-        styles.categoryItem,
-        selectedCategory?.id === item.id && styles.selectedCategory
-      ]}
-      onPress={() => setSelectedCategory(selectedCategory?.id === item.id ? null : item)}
-    >
-      <Text style={[
-        styles.categoryText,
-        selectedCategory?.id === item.id && styles.selectedCategoryText
-      ]}>
-        {item.name}
-      </Text>
-    </TouchableOpacity>
-  );
+  const renderCategory = ({ item }) => {
+    const isAll = item.id === 'all';
+    const selected = isAll ? !selectedCategory : selectedCategory?.id === item.id;
+    return (
+      <TouchableOpacity
+        style={[
+          styles.categoryItem,
+          selected && styles.selectedCategory
+        ]}
+        onPress={() => setSelectedCategory(isAll ? null : selected ? null : item)}
+      >
+        <Text style={[
+          styles.categoryText,
+          selected && styles.selectedCategoryText
+        ]}>
+          {item.name}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
 
   const renderProduct = ({ item }) => (
     <TouchableOpacity
@@ -185,22 +177,6 @@ const CatalogScreen = ({ navigation }) => {
     </TouchableOpacity>
   );
 
-  const renderSortButton = (value, label) => (
-    <TouchableOpacity
-      style={[
-        styles.sortButton,
-        sortBy === value && styles.selectedSortButton
-      ]}
-      onPress={() => setSortBy(value)}
-    >
-      <Text style={[
-        styles.sortButtonText,
-        sortBy === value && styles.selectedSortButtonText
-      ]}>
-        {label}
-      </Text>
-    </TouchableOpacity>
-  );
 
   if (loading && !refreshing) {
     return (
@@ -241,25 +217,15 @@ const CatalogScreen = ({ navigation }) => {
       {categories.length > 0 && (
         <View style={styles.categoriesContainer}>
           <FlatList
-            data={categories}
+            data={[{ id: 'all', name: 'Все' }, ...categories]}
             renderItem={renderCategory}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => String(item.id)}
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.categoriesList}
           />
         </View>
       )}
-
-      {/* Сортировка */}
-      <View style={styles.sortContainer}>
-        <Text style={styles.sortLabel}>Сортировка:</Text>
-        <View style={styles.sortButtons}>
-          {renderSortButton('name', 'По названию')}
-          {renderSortButton('price_asc', 'Цена ↑')}
-          {renderSortButton('price_desc', 'Цена ↓')}
-        </View>
-      </View>
 
       {/* Список товаров */}
       <FlatList
