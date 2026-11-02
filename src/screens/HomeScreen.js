@@ -14,7 +14,7 @@ import ProductImage, { CATEGORY_GLYPHS } from '../components/ui/ProductImage';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFeaturedProducts, fetchCategories } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
-import { catalogService, productService, promoService } from '../services';
+import { catalogService, productService, promoService, vacancyService } from '../services';
 import DemoBanner from '../components/ui/DemoBanner';
 import WeeklySpecialBanner from '../components/WeeklySpecialBanner';
 import useAppTheme from '../theme/useAppTheme';
@@ -34,6 +34,7 @@ const HomeScreen = ({ navigation }) => {
   const [apiCategories, setApiCategories] = useState([]);
   const [apiProducts, setApiProducts] = useState([]);
   const [weekly, setWeekly] = useState(null);
+  const [vacancies, setVacancies] = useState([]);
   const [banners, setBanners] = useState([
     {
       id: 1,
@@ -64,14 +65,17 @@ const HomeScreen = ({ navigation }) => {
 
   const loadApiData = async (force = false) => {
     try {
-      const [categoriesData, productsData, promosData, weeklyData] = await Promise.all([
+      const [categoriesData, productsData, promosData, weeklyData, vacanciesData] = await Promise.all([
         catalogService.getCategories({ force }),
         productService.getPopularProducts({ limit: 6, force }),
         promoService.getActivePromos(),
         // v1.1: блюдо недели — один объект или null (блока просто нет)
         catalogService.getWeeklySpecial({ force }),
+        // v1.1: вакансии — блок главной страницы, как на сайте друга
+        vacancyService.getVacancies(),
       ]);
       setWeekly(weeklyData || null);
+      setVacancies(Array.isArray(vacanciesData) ? vacanciesData : []);
       
       setApiCategories(categoriesData.results || categoriesData || []);
       setApiProducts(productsData.results || productsData || []);
@@ -225,6 +229,36 @@ const HomeScreen = ({ navigation }) => {
           ))}
         </View>
       </View>
+
+      {/* Вакансии (v1.1): блок главной, вход в список — «Все вакансии» */}
+      {vacancies.length > 0 && (
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Вакансии</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Vacancies')}>
+              <Text style={styles.seeAllText}>Все вакансии</Text>
+            </TouchableOpacity>
+          </View>
+          <FlatList
+            data={vacancies.slice(0, 5)}
+            keyExtractor={(item) => String(item.id)}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.vacanciesList}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.vacancyCard}
+                onPress={() => navigation.navigate('VacancyDetail', { vacancyId: item.id })}
+              >
+                <Text style={styles.vacancyTitle}>{item.title}</Text>
+                <Text style={styles.vacancySalary}>
+                  {item.salary ? `${item.salary} BYN` : 'по договорённости'}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      )}
 
       {/* Пицца недели (v1.1): блок из макетов design/weekly-special-*.png */}
       {weekly ? (
@@ -391,6 +425,29 @@ const makeStyles = (colors) => StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: colors.text,
+  },
+  vacanciesList: {
+    paddingHorizontal: 16,
+  },
+  vacancyCard: {
+    width: 200,
+    marginRight: 12,
+    backgroundColor: colors.cardBg,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: colors.divider,
+    padding: 14,
+  },
+  vacancyTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: colors.text,
+  },
+  vacancySalary: {
+    marginTop: 6,
+    fontSize: 13,
+    fontWeight: '600',
+    color: colors.accent,
   },
   seeAllText: {
     color: colors.accent,
