@@ -20,6 +20,8 @@ export const CATEGORY_GLYPHS = {
   sety: '🎁',
   sousy: '🥫',
   napitki: '🥤',
+  fastfud: '🍟',
+  skovorodki: '🍳',
 };
 
 export default function ProductImage({ uri, glyph, style, emojiSize = 40 }) {
