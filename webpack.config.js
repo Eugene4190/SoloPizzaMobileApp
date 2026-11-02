@@ -12,13 +12,18 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// `webpack serve` (разработка на ПК) и `webpack` (статика для GitHub Pages)
+// требуют разных publicPath: dev-сервер отдаёт ассеты только от корня '/',
+// а для Pages нужен относительный './'. Раньше './' ломал serve (404 на /).
+const isServe = process.argv.includes('serve');
+
 module.exports = {
   mode: 'development',
   entry: path.resolve(__dirname, 'web/index.web.jsx'),
   output: {
     path: path.resolve(__dirname, 'web-dist'),
     filename: 'bundle.js',
-    publicPath: './',
+    publicPath: isServe ? '/' : './',
   },
   devServer: {
     host: '0.0.0.0',
@@ -27,6 +32,22 @@ module.exports = {
     hot: true,
     // история навигации в браузере
     historyApiFallback: true,
+    // 04.11.2026: прокси на живой API друга. Браузер упирается в CORS
+    // (solo-pizza.by не отдаёт CORS-заголовки), а dev-сервер — нет: он
+    // проксирует запросы со своей стороны. Поэтому в веб-версии
+    // API_BASE_URL = '/api/v1' (относительный), и каталог становится ЖИВЫМ.
+    proxy: [
+      {
+        context: ['/api'],
+        target: 'https://solo-pizza.by',
+        changeOrigin: true,
+      },
+      {
+        context: ['/media'],
+        target: 'https://solo-pizza.by',
+        changeOrigin: true,
+      },
+    ],
   },
   resolve: {
     extensions: ['.web.js', '.web.jsx', '.web.ts', '.web.tsx', '.js', '.jsx', '.ts', '.tsx'],

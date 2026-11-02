@@ -1,11 +1,19 @@
 // API Configuration for SoloPizza Mobile App
 
+import { Platform } from 'react-native';
+
 // Base URL for the Django API
 // 03.11.2026: убрана ветка __DEV__ с 10.0.2.2 — это адрес ЭМУЛЯТОРА Android,
 // на живом телефоне и на iPhone он не существует, из-за чего debug-сборки
 // стучались в никуда и падали в демо-режим. Боевой адрес один для всех сборок;
 // локальный бэкенд друга не используется, его сервер в интернете.
-export const API_BASE_URL = 'https://solo-pizza.by/api/v1'; // Production URL
+//
+// 04.11.2026: веб-версия (npm run web) идёт через ОТНОСИТЕЛЬНЫЙ адрес:
+// запросы попадают в прокси webpack-dev-server, который пересылает их на
+// solo-pizza.by со своей стороны — так мы обходим CORS (друг его не отдаёт).
+// На телефонах остаётся абсолютный боевой адрес.
+export const API_BASE_URL =
+  Platform.OS === 'web' ? '/api/v1' : 'https://solo-pizza.by/api/v1'; // Production URL
 
 // ДЕМО-РЕЖИМ. На 01.11.2026 app_api существует ТОЛЬКО в коде сайта, на боевом
 // solo-pizza.by все /api/v1/* отвечают 404 (друг ещё не задеплоил).
