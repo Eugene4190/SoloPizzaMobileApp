@@ -16,7 +16,6 @@ import useAppTheme from '../theme/useAppTheme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 // ИСПРАВЛЕНО ПРИ АУДИТЕ: прямой импорт react-native-vector-icons в v10.x
 // не тянет шрифт — иконки рендерились пустыми квадратами.
-import Icon from '../components/ui/Icon';
 import { authService } from '../services';
 
 const LoginScreen = ({ navigation }) => {
@@ -193,12 +192,11 @@ const LoginScreen = ({ navigation }) => {
                 style={styles.eyeButton}
                 onPress={() => setShowPassword(!showPassword)}
                 disabled={loading}
+                accessibilityLabel={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
               >
-                <Icon
-                  name={showPassword ? 'visibility' : 'visibility-off'}
-                  size={24}
-                  color={loading ? '#ccc' : colors.textMuted}
-                />
+                <Text style={styles.eyeText}>
+                  {showPassword ? 'скрыть' : 'показать'}
+                </Text>
               </TouchableOpacity>
             </View>
             {errors.password && (
@@ -329,7 +327,9 @@ const makeStyles = (colors) => StyleSheet.create({
     paddingVertical: 14,
   },
   eyeText: {
-    fontSize: 18,
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.textMuted,
   },
   errorText: {
     color: colors.error,

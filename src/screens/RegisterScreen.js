@@ -311,7 +311,7 @@ const RegisterScreen = ({ navigation }) => {
                 onPress={() => setShowPassword(!showPassword)}
               >
                 <Text style={styles.eyeText}>
-                  {showPassword ? '🙈' : '👁️'}
+                  {showPassword ? 'скрыть' : 'показать'}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -343,7 +343,7 @@ const RegisterScreen = ({ navigation }) => {
                 onPress={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 <Text style={styles.eyeText}>
-                  {showConfirmPassword ? '🙈' : '👁️'}
+                  {showConfirmPassword ? 'скрыть' : 'показать'}
                 </Text>
               </TouchableOpacity>
             </View>

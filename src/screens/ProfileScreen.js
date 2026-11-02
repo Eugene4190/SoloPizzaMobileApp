@@ -227,6 +227,13 @@ const ProfileScreen = ({ navigation }) => {
           >
             <Text style={styles.registerButtonText}>Зарегистрироваться</Text>
           </TouchableOpacity>
+          {/* v1.1: вакансии доступны без входа — это публичный раздел сайта */}
+          <TouchableOpacity
+            style={styles.guestVacancyButton}
+            onPress={() => navigation.navigate('Vacancies')}
+          >
+            <Text style={styles.guestVacancyText}>💼 Вакансии — мы нанимаем</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -661,6 +668,15 @@ const makeStyles = (colors) => StyleSheet.create({
     color: colors.text,
     marginBottom: 16,
     textAlign: 'center',
+  },
+  guestVacancyButton: {
+    marginTop: 22,
+    alignItems: 'center',
+  },
+  guestVacancyText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.accent,
   },
   guestText: {
     fontSize: 16,
