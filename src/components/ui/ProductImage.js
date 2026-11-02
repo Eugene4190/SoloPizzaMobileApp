@@ -24,6 +24,12 @@ export const CATEGORY_GLYPHS = {
   skovorodki: '🍳',
 };
 
+// Чистая функция: веб-атрибуты ленивой загрузки по платформе.
+// Вынесена из компонента, чтобы регрессия тяжёлого каталога проверялась
+// без рендера и моков react-native (02.11.2026).
+export const webLazyProps = (os) =>
+  os === 'web' ? { loading: 'lazy', decoding: 'async' } : {};
+
 export default function ProductImage({ uri, glyph, style, emojiSize = 40 }) {
   const { colors } = useAppTheme();
 
@@ -33,9 +39,14 @@ export default function ProductImage({ uri, glyph, style, emojiSize = 40 }) {
     // и decoding="async": картинки вне экрана не грузятся и не декабятся,
     // лента начинает отвечать сразу. На native атрибуты игнорируются,
     // там ленивость даёт виртуализация FlatList (см. CatalogScreen).
-    const webLazy =
-      Platform.OS === 'web' ? { loading: 'lazy', decoding: 'async' } : {};
-    return <Image source={{ uri }} style={style} resizeMode="cover" {...webLazy} />;
+    return (
+      <Image
+        source={{ uri }}
+        style={style}
+        resizeMode="cover"
+        {...webLazyProps(Platform.OS)}
+      />
+    );
   }
 
   return (

@@ -230,6 +230,47 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
 
+      {/* Пицца недели (v1.1): блок из макетов design/weekly-special-*.png */}
+      {weekly ? (
+        <WeeklySpecialBanner
+          product={weekly}
+          onAdd={() => handleAddToCart(weekly)}
+          onPress={() => navigation.navigate('ProductDetail', { productId: weekly.id })}
+        />
+      ) : null}
+
+      {/* Featured Products Section */}
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Новинки</Text>
+          <TouchableOpacity onPress={navigateToAllProducts}>
+            <Text style={styles.seeAllText}>Все</Text>
+          </TouchableOpacity>
+        </View>
+        
+        {(apiProducts?.length > 0 ? apiProducts : featuredProducts)?.length > 0 ? (
+          <FlatList
+            data={(apiProducts?.length > 0 ? apiProducts : featuredProducts).slice(0, 6)}
+            renderItem={renderFeaturedProduct}
+            keyExtractor={(item) => item.id.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.productsList}
+          />
+        ) : (
+          <Text style={styles.emptyText}>Товары не найдены</Text>
+        )}
+      </View>
+
+      {/* Пицца недели (v1.1): блок из макетов design/weekly-special-*.png */}
+      {weekly ? (
+        <WeeklySpecialBanner
+          product={weekly}
+          onAdd={() => handleAddToCart(weekly)}
+          onPress={() => navigation.navigate('ProductDetail', { productId: weekly.id })}
+        />
+      ) : null}
+
       {/* Вакансии (v1.1): блок главной, вход в список — «Все вакансии» */}
       {vacancies.length > 0 && (
         <View style={styles.section}>
@@ -260,15 +301,6 @@ const HomeScreen = ({ navigation }) => {
         </View>
       )}
 
-      {/* Пицца недели (v1.1): блок из макетов design/weekly-special-*.png */}
-      {weekly ? (
-        <WeeklySpecialBanner
-          product={weekly}
-          onAdd={() => handleAddToCart(weekly)}
-          onPress={() => navigation.navigate('ProductDetail', { productId: weekly.id })}
-        />
-      ) : null}
-
       {/* Categories Section */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
@@ -289,29 +321,6 @@ const HomeScreen = ({ navigation }) => {
           />
         ) : (
           <Text style={styles.emptyText}>Категории не найдены</Text>
-        )}
-      </View>
-
-      {/* Featured Products Section */}
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Новинки</Text>
-          <TouchableOpacity onPress={navigateToAllProducts}>
-            <Text style={styles.seeAllText}>Все</Text>
-          </TouchableOpacity>
-        </View>
-        
-        {(apiProducts?.length > 0 ? apiProducts : featuredProducts)?.length > 0 ? (
-          <FlatList
-            data={(apiProducts?.length > 0 ? apiProducts : featuredProducts).slice(0, 6)}
-            renderItem={renderFeaturedProduct}
-            keyExtractor={(item) => item.id.toString()}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.productsList}
-          />
-        ) : (
-          <Text style={styles.emptyText}>Товары не найдены</Text>
         )}
       </View>
 
