@@ -18,4 +18,14 @@ if (__DEV__ && USE_DEMO_FALLBACK) {
   };
 }
 
+// Жёлтая плашка «Open debugger to view warnings» — dev-шум на экране.
+// Предупреждения не теряются: уходят строками в терминал Metro, где их удобно
+// читать разработчику, а не пользователю на телефоне.
+if (__DEV__) {
+  const origConsoleLog = console.log.bind(console);
+  console.warn = (...args) => {
+    origConsoleLog('[warn]', ...args);
+  };
+}
+
 AppRegistry.registerComponent(appName, () => App);
