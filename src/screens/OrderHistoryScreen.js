@@ -99,21 +99,21 @@ const OrderHistoryScreen = ({ navigation }) => {
       case 'pending':
         return '#F39C12';
       case 'confirmed':
-        return '#079b59';
+        return colors.accent;
       case 'preparing':
       case 'in_progress':
         return '#9B59B6';
       case 'ready':
-        return '#28a745';
+        return colors.success;
       case 'delivering':
       case 'out_for_delivery':
-        return '#079b59';
+        return colors.accent;
       case 'delivered':
-        return '#28a745';
+        return colors.success;
       case 'cancelled':
-        return '#dc3545';
+        return colors.error;
       default:
-        return '#6c757d';
+        return colors.textMuted;
     }
   };
 
@@ -361,7 +361,7 @@ const OrderHistoryScreen = ({ navigation }) => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            colors={['#079b59']}
+            colors={[colors.accent]}
             tintColor="#079b59"
           />
         }
@@ -393,7 +393,7 @@ const OrderHistoryScreen = ({ navigation }) => {
 const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
   },
   header: {
     backgroundColor: colors.accent,
@@ -409,7 +409,7 @@ const makeStyles = (colors) => StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: colors.buttonText,
   },
   listContainer: {
     padding: 15,
@@ -421,7 +421,7 @@ const makeStyles = (colors) => StyleSheet.create({
     paddingVertical: 60,
   },
   orderCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     borderRadius: 20,
     padding: 16,
     marginBottom: 12,
@@ -459,7 +459,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderRadius: 20,
   },
   statusText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 12,
     fontWeight: '600',
   },
@@ -515,7 +515,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderRadius: 6,
   },
   cancelButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 14,
     fontWeight: '600',
   },
@@ -542,7 +542,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderRadius: 8,
   },
   shopButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '600',
   },
@@ -571,7 +571,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderRadius: 8,
   },
   retryButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '600',
   },
@@ -600,7 +600,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderRadius: 8,
   },
   loginButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '600',
   },

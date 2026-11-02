@@ -238,7 +238,7 @@ const CatalogScreen = ({ navigation }) => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            colors={['#079b59']}
+            colors={[colors.accent]}
           />
         }
         onEndReached={loadMore}

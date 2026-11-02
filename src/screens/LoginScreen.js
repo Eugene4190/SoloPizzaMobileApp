@@ -195,7 +195,7 @@ const LoginScreen = ({ navigation }) => {
                 <Icon
                   name={showPassword ? 'visibility' : 'visibility-off'}
                   size={24}
-                  color={loading ? '#ccc' : '#6c757d'}
+                  color={loading ? '#ccc' : colors.textMuted}
                 />
               </TouchableOpacity>
             </View>
@@ -258,7 +258,7 @@ const LoginScreen = ({ navigation }) => {
 const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
   },
   scrollContainer: {
     flexGrow: 1,
@@ -295,7 +295,7 @@ const makeStyles = (colors) => StyleSheet.create({
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 14,
@@ -309,7 +309,7 @@ const makeStyles = (colors) => StyleSheet.create({
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: colors.divider,
@@ -358,7 +358,7 @@ const makeStyles = (colors) => StyleSheet.create({
     shadowOpacity: 0,
   },
   loginButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 18,
     fontWeight: 'bold',
   },

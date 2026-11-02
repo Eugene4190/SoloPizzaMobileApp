@@ -11,6 +11,7 @@ import {
   TextInput,
 } from 'react-native';
 import useAppTheme from '../theme/useAppTheme';
+import { num } from '../utils/money';
 import ProductImage from '../components/ui/ProductImage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 // ИСПРАВЛЕНО ПРИ АУДИТЕ: прямой импорт react-native-vector-icons в v10.x
@@ -53,7 +54,7 @@ const CartScreen = ({ navigation }) => {
       return cartSummary;
     }
     
-    const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const subtotal = cartItems.reduce((sum, item) => sum + (num(item.price) * item.quantity), 0);
     // Скидки и доставку считает сервер друга (quote_cart из plan.txt), когда
     // появятся эндпоинты заказов. Плейсхолдеры 150/10% убраны как выдуманные.
     const discount = 0;
@@ -69,7 +70,7 @@ const CartScreen = ({ navigation }) => {
   };
 
   // Вычисляем общую сумму и количество товаров
-  const totalAmount = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const totalAmount = items.reduce((sum, item) => sum + (num(item.price) * item.quantity), 0);
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const updateQuantity = async (itemId, newQuantity) => {
@@ -225,7 +226,7 @@ const CartScreen = ({ navigation }) => {
   };
 
   const renderCartItem = ({ item }) => {
-    const itemTotal = (item.price * item.quantity).toFixed(2);
+    const itemTotal = (num(item.price) * item.quantity).toFixed(2);
 
     return (
       <View style={styles.cartItem}>
@@ -255,7 +256,7 @@ const CartScreen = ({ navigation }) => {
           )}
           
           <View style={styles.itemFooter}>
-            <Text style={styles.itemPrice}>{(item.price || item.total_price).toFixed(2)} BYN за шт.</Text>
+            <Text style={styles.itemPrice}>{num(item.price ?? item.total_price).toFixed(2)} BYN за шт.</Text>
             <Text style={styles.itemTotal}>Итого: {itemTotal} BYN</Text>
           </View>
         </View>
@@ -315,7 +316,7 @@ const CartScreen = ({ navigation }) => {
       </View>
       <View style={styles.summaryRow}>
         <Text style={styles.summaryLabel}>Сумма:</Text>
-        <Text style={styles.summaryValue}>{totalAmount.toFixed(2)} BYN</Text>
+        <Text style={styles.summaryValue}>{num(totalAmount).toFixed(2)} BYN</Text>
       </View>
       <View style={styles.summaryDivider} />
       <View style={styles.summaryRow}>
@@ -354,7 +355,7 @@ const CartScreen = ({ navigation }) => {
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={handleRefresh}
-                colors={['#079b59']}
+                colors={[colors.accent]}
               />
             }
             ListFooterComponent={renderCartSummary}
@@ -386,7 +387,7 @@ const CartScreen = ({ navigation }) => {
 const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
   },
   header: {
     backgroundColor: colors.accent,
@@ -405,18 +406,18 @@ const makeStyles = (colors) => StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: colors.buttonText,
   },
   clearButton: {
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
     borderWidth: 2,
-    borderColor: '#FFFFFF',
+    bordercolor: colors.buttonText,
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   clearButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 14,
     fontWeight: '600',
   },
@@ -424,7 +425,7 @@ const makeStyles = (colors) => StyleSheet.create({
     paddingBottom: 24,
   },
   cartItem: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     marginHorizontal: 20,
     marginTop: 16,
     borderRadius: 20,
@@ -492,7 +493,7 @@ const makeStyles = (colors) => StyleSheet.create({
     elevation: 2,
   },
   quantityButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 18,
     fontWeight: '700',
   },
@@ -519,12 +520,12 @@ const makeStyles = (colors) => StyleSheet.create({
     elevation: 2,
   },
   removeButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 20,
     fontWeight: '700',
   },
   summaryContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     margin: 20,
     borderRadius: 20,
     padding: 24,
@@ -603,13 +604,13 @@ const makeStyles = (colors) => StyleSheet.create({
     elevation: 6,
   },
   continueButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '700',
     letterSpacing: 0.5,
   },
   bottomPanel: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     paddingHorizontal: 24,
     paddingVertical: 20,
     borderTopWidth: 1,
@@ -647,7 +648,7 @@ const makeStyles = (colors) => StyleSheet.create({
     elevation: 6,
   },
   checkoutButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 18,
     fontWeight: '700',
     letterSpacing: 0.5,

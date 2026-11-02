@@ -418,7 +418,7 @@ const RegisterScreen = ({ navigation }) => {
 const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
   },
   scrollContainer: {
     flexGrow: 1,
@@ -454,7 +454,7 @@ const makeStyles = (colors) => StyleSheet.create({
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 14,
@@ -469,7 +469,7 @@ const makeStyles = (colors) => StyleSheet.create({
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: colors.divider,
@@ -516,7 +516,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderColor: colors.accent,
   },
   checkmark: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 12,
     fontWeight: 'bold',
   },
@@ -549,7 +549,7 @@ const makeStyles = (colors) => StyleSheet.create({
     shadowOpacity: 0,
   },
   registerButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '600',
   },

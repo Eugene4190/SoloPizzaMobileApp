@@ -11,6 +11,7 @@ import {
   FlatList,
 } from 'react-native';
 import useAppTheme from '../theme/useAppTheme';
+import { num } from '../utils/money';
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrder } from '../store/slices/orderSlice';
 import { clearCart } from '../store/slices/cartSlice';
@@ -49,7 +50,8 @@ const CheckoutScreen = ({ navigation }) => {
   const [orderComment, setOrderComment] = useState('');
   const [errors, setErrors] = useState({});
 
-  const deliveryFee = deliveryType === 'delivery' ? 5.00 : 0;
+  // Доставка/скидки считаются на сервере (quote_cart появится у друга). Пока не выдумываем цифру.
+  const deliveryFee = 0;
   const finalTotal = totalAmount + deliveryFee;
 
   useEffect(() => {
@@ -190,7 +192,7 @@ const CheckoutScreen = ({ navigation }) => {
 
       const orderData = {
         items: items.map(item => ({
-          product_id: item.product.id,
+          product_id: item.productId ?? item.product?.id,
           quantity: item.quantity,
           size_id: item.size?.id,
           addon_ids: item.addons?.map(addon => addon.id) || [],
@@ -293,7 +295,7 @@ const CheckoutScreen = ({ navigation }) => {
       <View style={styles.itemPricing}>
         <Text style={styles.itemQuantity}>{item.quantity} шт.</Text>
         <Text style={styles.itemPrice}>
-          {(item.price * item.quantity).toFixed(2)} BYN
+          {(num(item.price) * item.quantity).toFixed(2)} BYN
         </Text>
       </View>
     </View>
@@ -542,18 +544,18 @@ const CheckoutScreen = ({ navigation }) => {
       <View style={styles.summarySection}>
         <View style={styles.summaryRow}>
           <Text style={styles.summaryLabel}>Сумма заказа:</Text>
-          <Text style={styles.summaryValue}>{totalAmount.toFixed(2)} BYN</Text>
+          <Text style={styles.summaryValue}>{num(totalAmount).toFixed(2)} BYN</Text>
         </View>
         {deliveryType === 'delivery' && (
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Доставка:</Text>
-            <Text style={styles.summaryValue}>{deliveryFee.toFixed(2)} BYN</Text>
+            <Text style={styles.summaryValue}>{num(deliveryFee).toFixed(2)} BYN</Text>
           </View>
         )}
         <View style={styles.summaryDivider} />
         <View style={styles.summaryRow}>
           <Text style={styles.totalLabel}>Итого к оплате:</Text>
-          <Text style={styles.totalValue}>{finalTotal.toFixed(2)} BYN</Text>
+          <Text style={styles.totalValue}>{num(finalTotal).toFixed(2)} BYN</Text>
         </View>
       </View>
 
@@ -571,7 +573,7 @@ const CheckoutScreen = ({ navigation }) => {
             <ActivityIndicator color="#FFFFFF" size="small" />
           ) : (
             <Text style={styles.orderButtonText}>
-              Оформить заказ на {finalTotal.toFixed(2)} BYN
+              Оформить заказ на {num(finalTotal).toFixed(2)} BYN
             </Text>
           )}
         </TouchableOpacity>
@@ -583,7 +585,7 @@ const CheckoutScreen = ({ navigation }) => {
 const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
   },
   header: {
     backgroundColor: colors.accent,
@@ -595,10 +597,10 @@ const makeStyles = (colors) => StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: colors.buttonText,
   },
   section: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     marginTop: 10,
     padding: 20,
   },
@@ -614,7 +616,7 @@ const makeStyles = (colors) => StyleSheet.create({
   },
   optionButton: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
     paddingVertical: 15,
     paddingHorizontal: 10,
     borderRadius: 8,
@@ -633,7 +635,7 @@ const makeStyles = (colors) => StyleSheet.create({
     textAlign: 'center',
   },
   optionTextActive: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
   },
   inputContainer: {
     marginBottom: 15,
@@ -652,7 +654,7 @@ const makeStyles = (colors) => StyleSheet.create({
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 12,
@@ -709,7 +711,7 @@ const makeStyles = (colors) => StyleSheet.create({
     color: colors.accent,
   },
   summarySection: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     marginTop: 10,
     padding: 20,
   },
@@ -764,7 +766,7 @@ const makeStyles = (colors) => StyleSheet.create({
     shadowOpacity: 0,
   },
   orderButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 18,
     fontWeight: 'bold',
   },

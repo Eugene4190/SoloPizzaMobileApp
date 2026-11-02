@@ -17,6 +17,7 @@ import { addToCart } from '../store/slices/cartSlice';
 import { catalogService, productService, promoService } from '../services';
 import DemoBanner from '../components/ui/DemoBanner';
 import useAppTheme from '../theme/useAppTheme';
+import { num } from '../utils/money';
 
 const { width } = Dimensions.get('window');
 
@@ -36,19 +37,19 @@ const HomeScreen = ({ navigation }) => {
       id: 1,
       title: 'Скидка 20%',
       subtitle: 'На все пиццы до конца недели',
-      backgroundColor: '#079b59',
+      backgroundColor: colors.accent,
     },
     {
       id: 2,
       title: 'Новинка!',
       subtitle: 'Попробуйте нашу новую пиццу "Четыре сыра"',
-      backgroundColor: '#28A745',
+      backgroundColor: colors.success,
     },
     {
       id: 3,
       title: 'Быстрая доставка',
       subtitle: 'Доставим за 30 минут или пицца бесплатно',
-      backgroundColor: '#079b59',
+      backgroundColor: colors.accent,
     },
   ]);
 
@@ -76,7 +77,7 @@ const HomeScreen = ({ navigation }) => {
           id: promo.id,
           title: promo.title,
           subtitle: promo.description || promo.subtitle,
-          backgroundColor: promo.background_color || '#079b59',
+          backgroundColor: promo.background_color || colors.accent,
         }));
         setBanners(apiBanners);
       }
@@ -145,7 +146,7 @@ const HomeScreen = ({ navigation }) => {
         </Text>
         <View style={styles.productFooter}>
           <Text style={styles.productPrice}>
-            {(item.price || item.base_price)?.toFixed ? (item.price || item.base_price).toFixed(2) : (item.price || item.base_price)} ₽
+            {num(item.price ?? item.base_price).toFixed(2)} BYN
           </Text>
           <TouchableOpacity 
             style={styles.addButton}
@@ -466,7 +467,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderRadius: 8,
   },
   promoDiscount: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 4,

@@ -12,6 +12,7 @@ import {
   Linking,
 } from 'react-native';
 import useAppTheme from '../theme/useAppTheme';
+import { num } from '../utils/money';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrderDetail, cancelOrder } from '../store/slices/orderSlice';
 import { orderService } from '../services';
@@ -121,19 +122,19 @@ const OrderDetailScreen = ({ route, navigation }) => {
       case 'pending':
         return '#F39C12';
       case 'confirmed':
-        return '#079b59';
+        return colors.accent;
       case 'preparing':
         return '#9B59B6';
       case 'ready':
-        return '#28a745';
+        return colors.success;
       case 'delivering':
-        return '#079b59';
+        return colors.accent;
       case 'delivered':
-        return '#28a745';
+        return colors.success;
       case 'cancelled':
-        return '#dc3545';
+        return colors.error;
       default:
-        return '#6c757d';
+        return colors.textMuted;
     }
   };
 
@@ -190,7 +191,7 @@ const OrderDetailScreen = ({ route, navigation }) => {
       <View style={styles.itemPricing}>
         <Text style={styles.itemQuantity}>{item.quantity} шт.</Text>
         <Text style={styles.itemTotal}>
-          {(item.price * item.quantity).toFixed(2)} BYN
+          {(num(item.price) * item.quantity).toFixed(2)} BYN
         </Text>
       </View>
     </View>
@@ -230,7 +231,7 @@ const OrderDetailScreen = ({ route, navigation }) => {
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
-          colors={['#079b59']}
+          colors={[colors.accent]}
         />
       }
     >
@@ -345,7 +346,7 @@ const OrderDetailScreen = ({ route, navigation }) => {
         <View style={styles.summaryRow}>
           <Text style={styles.summaryLabel}>Сумма заказа:</Text>
           <Text style={styles.summaryValue}>
-            {(currentOrder.total_amount - (currentOrder.delivery_type === 'delivery' ? 5 : 0)).toFixed(2)} BYN
+            {num(currentOrder.total_amount).toFixed(2)} BYN
           </Text>
         </View>
         {currentOrder.delivery_type === 'delivery' && (
@@ -400,7 +401,7 @@ const OrderDetailScreen = ({ route, navigation }) => {
 const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
   },
   header: {
     backgroundColor: colors.accent,
@@ -415,20 +416,20 @@ const makeStyles = (colors) => StyleSheet.create({
     padding: 5,
   },
   backButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '500',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: colors.buttonText,
   },
   placeholder: {
     width: 60,
   },
   statusSection: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     padding: 20,
     alignItems: 'center',
     marginTop: 10,
@@ -440,7 +441,7 @@ const makeStyles = (colors) => StyleSheet.create({
     marginBottom: 10,
   },
   statusText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -450,7 +451,7 @@ const makeStyles = (colors) => StyleSheet.create({
     marginBottom: 4,
   },
   section: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     marginTop: 10,
     padding: 20,
   },
@@ -540,7 +541,7 @@ const makeStyles = (colors) => StyleSheet.create({
     lineHeight: 22,
   },
   summarySection: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     marginTop: 10,
     padding: 20,
   },
@@ -586,7 +587,7 @@ const makeStyles = (colors) => StyleSheet.create({
     marginBottom: 12,
   },
   cancelButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -600,7 +601,7 @@ const makeStyles = (colors) => StyleSheet.create({
     alignItems: 'center',
   },
   reorderButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -608,7 +609,7 @@ const makeStyles = (colors) => StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
   },
   loadingText: {
     marginTop: 16,
@@ -620,7 +621,7 @@ const makeStyles = (colors) => StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 40,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
   },
   errorTitle: {
     fontSize: 20,
@@ -641,7 +642,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderRadius: 8,
   },
   retryButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '600',
   },
@@ -653,7 +654,7 @@ const makeStyles = (colors) => StyleSheet.create({
     marginTop: 12,
   },
   supportButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: 'bold',
   },

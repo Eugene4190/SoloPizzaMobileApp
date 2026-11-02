@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import ProductImage from '../components/ui/ProductImage';
 import useAppTheme from '../theme/useAppTheme';
+import { num } from '../utils/money';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductById } from '../store/slices/productSlice';
 import { addToCart } from '../store/slices/cartSlice';
@@ -120,9 +121,9 @@ const ProductDetailScreen = ({ route, navigation }) => {
   useEffect(() => {
     // Пересчитываем общую стоимость
     if (product && selectedSize) {
-      const basePrice = product.price || product.base_price || 0;
-      const sizePrice = selectedSize.price || 0;
-      const toppingsPrice = selectedToppings.reduce((sum, topping) => sum + topping.price, 0);
+      const basePrice = num(product.price ?? product.base_price);
+      const sizePrice = num(selectedSize?.price);
+      const toppingsPrice = selectedToppings.reduce((sum, topping) => sum + num(topping.price), 0);
       setTotalPrice((basePrice + sizePrice + toppingsPrice) * quantity);
     }
   }, [product, selectedSize, selectedToppings, quantity]);
@@ -158,7 +159,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
       productId: product.id,
       name: product.name,
       image: product.image || product.images?.[0]?.image,
-      price: totalPrice / quantity,
+      price: num(totalPrice) / quantity,
       quantity: quantity,
       size: selectedSize,
       toppings: selectedToppings,
@@ -304,7 +305,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
             {product.description}
           </Text>
           <Text style={styles.basePrice}>
-            Базовая цена: {product.price || product.base_price} BYN
+            Базовая цена: {num(product.price ?? product.base_price).toFixed(2)} BYN
           </Text>
         </View>
 
@@ -382,7 +383,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
       <View style={styles.bottomPanel}>
         <View style={styles.priceContainer}>
           <Text style={styles.totalPriceLabel}>Итого:</Text>
-          <Text style={styles.totalPrice}>{totalPrice.toFixed(2)} BYN</Text>
+          <Text style={styles.totalPrice}>{num(totalPrice).toFixed(2)} BYN</Text>
         </View>
         <TouchableOpacity
           style={styles.addToCartButton}
@@ -398,13 +399,13 @@ const ProductDetailScreen = ({ route, navigation }) => {
 const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
   },
   loadingText: {
     marginTop: 16,
@@ -415,7 +416,7 @@ const makeStyles = (colors) => StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     paddingHorizontal: 20,
   },
   errorText: {
@@ -433,7 +434,7 @@ const makeStyles = (colors) => StyleSheet.create({
   },
   productInfo: {
     padding: 24,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     marginBottom: 8,
   },
   productName: {
@@ -455,7 +456,7 @@ const makeStyles = (colors) => StyleSheet.create({
     color: colors.accent,
   },
   section: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     marginBottom: 8,
     padding: 24,
   },
@@ -471,7 +472,7 @@ const makeStyles = (colors) => StyleSheet.create({
     gap: 12,
   },
   optionButton: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     paddingHorizontal: 20,
     paddingVertical: 14,
     borderRadius: 20,
@@ -501,7 +502,7 @@ const makeStyles = (colors) => StyleSheet.create({
     textAlign: 'center',
   },
   optionTextActive: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
   },
   optionPrice: {
     fontSize: 13,
@@ -510,7 +511,7 @@ const makeStyles = (colors) => StyleSheet.create({
     fontWeight: '500',
   },
   optionPriceActive: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
   },
   addonsContainer: {
     gap: 12,
@@ -520,7 +521,7 @@ const makeStyles = (colors) => StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     borderRadius: 20,
     borderWidth: 2,
     borderColor: colors.divider,
@@ -560,7 +561,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderRadius: 6,
     borderWidth: 2,
     borderColor: colors.divider,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -569,7 +570,7 @@ const makeStyles = (colors) => StyleSheet.create({
     borderColor: colors.accent,
   },
   checkmark: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 14,
     fontWeight: 'bold',
   },
@@ -593,7 +594,7 @@ const makeStyles = (colors) => StyleSheet.create({
     elevation: 2,
   },
   quantityButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 20,
     fontWeight: 'bold',
   },
@@ -624,7 +625,7 @@ const makeStyles = (colors) => StyleSheet.create({
     color: colors.textMuted,
   },
   bottomPanel: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     padding: 24,
     borderTopWidth: 1,
     borderTopColor: colors.divider,
@@ -662,7 +663,7 @@ const makeStyles = (colors) => StyleSheet.create({
     elevation: 6,
   },
   addToCartButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 18,
     fontWeight: '700',
   },

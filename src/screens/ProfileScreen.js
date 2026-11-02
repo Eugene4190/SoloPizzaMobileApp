@@ -234,7 +234,7 @@ const ProfileScreen = ({ navigation }) => {
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
-          colors={['#079b59']}
+          colors={[colors.accent]}
         />
       }
     >
@@ -430,11 +430,11 @@ const ProfileScreen = ({ navigation }) => {
 const makeStyles = (colors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
   },
   guestContainer: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
   },
   header: {
     backgroundColor: colors.accent,
@@ -448,18 +448,18 @@ const makeStyles = (colors) => StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: colors.buttonText,
   },
   editButton: {
     padding: 8,
   },
   editButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '500',
   },
   profileSection: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     marginTop: 10,
     padding: 20,
     alignItems: 'center',
@@ -478,7 +478,7 @@ const makeStyles = (colors) => StyleSheet.create({
   avatarText: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: colors.buttonText,
   },
   profileInfo: {
     alignItems: 'center',
@@ -511,7 +511,7 @@ const makeStyles = (colors) => StyleSheet.create({
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#F8F9FA',
+    backgroundColor: colors.bg,
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 12,
@@ -546,7 +546,7 @@ const makeStyles = (colors) => StyleSheet.create({
     alignItems: 'center',
   },
   cancelButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '600',
   },
@@ -585,17 +585,17 @@ const makeStyles = (colors) => StyleSheet.create({
     borderRadius: 8,
   },
   retryButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '600',
   },
   saveButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: '600',
   },
   menuSection: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     marginTop: 10,
   },
   menuItem: {
@@ -634,7 +634,7 @@ const makeStyles = (colors) => StyleSheet.create({
     alignItems: 'center',
   },
   logoutButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -668,7 +668,7 @@ const makeStyles = (colors) => StyleSheet.create({
     alignItems: 'center',
   },
   loginButtonText: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -688,7 +688,7 @@ const makeStyles = (colors) => StyleSheet.create({
     fontWeight: 'bold',
   },
   statsSection: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.cardBg,
     marginTop: 10,
     padding: 20,
   },
