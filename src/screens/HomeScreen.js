@@ -28,7 +28,6 @@ const HomeScreen = ({ navigation }) => {
   const styles = makeStyles(colors);
   const dispatch = useDispatch();
   const { featuredProducts, categories, loading } = useSelector(state => state.products);
-  const { user } = useSelector(state => state.auth);
   
   const [refreshing, setRefreshing] = useState(false);
   const [bannerIndex, setBannerIndex] = useState(0);
@@ -204,41 +203,6 @@ const HomeScreen = ({ navigation }) => {
     >
       <DemoBanner />
 
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>SoloPizza</Text>
-        <Text style={styles.headerSubtitle}>
-          {user ? `Привет, ${user.first_name || 'Друг'}!` : 'Лучшая пицца в городе'}
-        </Text>
-      </View>
-
-      {/* Banner Carousel */}
-      <View style={styles.bannerContainer}>
-        <View style={[styles.banner, { backgroundColor: banners[bannerIndex].backgroundColor }]}>
-          <Text style={styles.bannerTitle}>{banners[bannerIndex].title}</Text>
-          <Text style={styles.bannerSubtitle}>{banners[bannerIndex].subtitle}</Text>
-        </View>
-        <View style={styles.bannerIndicators}>
-          {banners.map((_, index) => (
-            <View
-              key={index}
-              style={[
-                styles.indicator,
-                { opacity: index === bannerIndex ? 1 : 0.3 }
-              ]}
-            />
-          ))}
-        </View>
-      </View>
-
-      {/* Пицца недели (v1.1): блок из макетов design/weekly-special-*.png */}
-      {weekly ? (
-        <WeeklySpecialBanner
-          product={weekly}
-          onAdd={() => handleAddToCart(weekly)}
-          onPress={() => navigation.navigate('ProductDetail', { productId: weekly.id })}
-        />
-      ) : null}
 
       {/* Featured Products Section */}
       <View style={styles.section}>
@@ -272,6 +236,49 @@ const HomeScreen = ({ navigation }) => {
         />
       ) : null}
 
+      {/* Banner Carousel */}
+      <View style={styles.bannerContainer}>
+        <View style={[styles.banner, { backgroundColor: banners[bannerIndex].backgroundColor }]}>
+          <Text style={styles.bannerTitle}>{banners[bannerIndex].title}</Text>
+          <Text style={styles.bannerSubtitle}>{banners[bannerIndex].subtitle}</Text>
+        </View>
+        <View style={styles.bannerIndicators}>
+          {banners.map((_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.indicator,
+                { opacity: index === bannerIndex ? 1 : 0.3 }
+              ]}
+            />
+          ))}
+        </View>
+      </View>
+
+
+      {/* Categories Section */}
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Категории</Text>
+          <TouchableOpacity onPress={navigateToAllProducts}>
+            <Text style={styles.seeAllText}>Все товары</Text>
+          </TouchableOpacity>
+        </View>
+        
+        {(apiCategories?.length > 0 ? apiCategories : categories)?.length > 0 ? (
+          <FlatList
+            data={apiCategories?.length > 0 ? apiCategories : categories}
+            renderItem={renderCategory}
+            keyExtractor={(item) => item.id.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.categoriesList}
+          />
+        ) : (
+          <Text style={styles.emptyText}>Категории не найдены</Text>
+        )}
+      </View>
+
       {/* Вакансии (v1.1): блок главной, вход в список — «Все вакансии» */}
       {vacancies.length > 0 && (
         <View style={styles.section}>
@@ -301,46 +308,8 @@ const HomeScreen = ({ navigation }) => {
           />
         </View>
       )}
+      {/* Доставка и контакты: блоки встанут сюда после API друга (home v2) */}
 
-      {/* Categories Section */}
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Категории</Text>
-          <TouchableOpacity onPress={navigateToAllProducts}>
-            <Text style={styles.seeAllText}>Все товары</Text>
-          </TouchableOpacity>
-        </View>
-        
-        {(apiCategories?.length > 0 ? apiCategories : categories)?.length > 0 ? (
-          <FlatList
-            data={apiCategories?.length > 0 ? apiCategories : categories}
-            renderItem={renderCategory}
-            keyExtractor={(item) => item.id.toString()}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.categoriesList}
-          />
-        ) : (
-          <Text style={styles.emptyText}>Категории не найдены</Text>
-        )}
-      </View>
-
-      {/* Info Section */}
-      <View style={styles.infoSection}>
-        <Text style={styles.infoTitle}>Почему выбирают нас?</Text>
-        <View style={styles.infoItem}>
-          <Text style={styles.infoItemTitle}>🍕 Свежие ингредиенты</Text>
-          <Text style={styles.infoItemText}>Используем только качественные продукты</Text>
-        </View>
-        <View style={styles.infoItem}>
-          <Text style={styles.infoItemTitle}>🚚 Быстрая доставка</Text>
-          <Text style={styles.infoItemText}>Доставим горячую пиццу за 30 минут</Text>
-        </View>
-        <View style={styles.infoItem}>
-          <Text style={styles.infoItemTitle}>💰 Выгодные цены</Text>
-          <Text style={styles.infoItemText}>Лучшие цены в городе</Text>
-        </View>
-      </View>
     </ScrollView>
   );
 };
@@ -360,25 +329,6 @@ const makeStyles = (colors) => StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     color: colors.textMuted,
-  },
-  header: {
-    paddingHorizontal: 16,
-    paddingTop: Platform.OS === 'web' ? 12 : 50,
-    paddingBottom: 12,
-    backgroundColor: colors.accent,
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: colors.buttonText,
-    textAlign: 'center',
-  },
-  headerSubtitle: {
-    fontSize: 13,
-    color: colors.buttonText,
-    textAlign: 'center',
-    marginTop: 2,
-    opacity: 0.9,
   },
   bannerContainer: {
     margin: 20,
@@ -559,39 +509,6 @@ const makeStyles = (colors) => StyleSheet.create({
     color: colors.buttonText,
     fontSize: 18,
     fontWeight: 'bold',
-  },
-  infoSection: {
-    marginHorizontal: 20,
-    marginBottom: 30,
-    backgroundColor: colors.cardBg,
-    borderRadius: 20,
-    padding: 20,
-    elevation: 3,
-    shadowColor: colors.text,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-  },
-  infoTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.text,
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  infoItem: {
-    marginBottom: 15,
-  },
-  infoItemTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: colors.text,
-    marginBottom: 5,
-  },
-  infoItemText: {
-    fontSize: 14,
-    color: colors.textMuted,
-    lineHeight: 20,
   },
 });
 

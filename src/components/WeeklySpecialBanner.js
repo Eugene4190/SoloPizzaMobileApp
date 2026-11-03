@@ -165,6 +165,11 @@ const makeStyles = (colors) =>
       overflow: 'hidden',
     },
     image: {
+      // absolute-инсеты: картинка не участвует в расчёте высоты строки,
+      // иначе на мобильном веб огромный png растягивает карточку на экраны
+      position: 'absolute',
+      top: 0,
+      left: 0,
       width: '100%',
       height: '100%',
     },
